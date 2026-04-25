@@ -1,0 +1,40 @@
+{
+  "placeholderImages": [
+    {
+      "id": "pdf-thumb-1",
+      "description": "PDF page 1 thumbnail",
+      "imageUrl": "https://picsum.photos/seed/pdf1/150/200",
+      "imageHint": "document page"
+    },
+    {
+      "id": "pdf-thumb-2",
+      "description": "PDF page 2 thumbnail",
+      "imageUrl": "https://picsum.photos/seed/pdf2/150/200",
+      "imageHint": "document text"
+    },
+    {
+      "id": "pdf-thumb-3",
+      "description": "PDF page 3 thumbnail",
+      "imageUrl": "https://picsum.photos/seed/pdf3/150/200",
+      "imageHint": "form page"
+    },
+    {
+      "id": "pdf-thumb-4",
+      "description": "PDF page 4 thumbnail",
+      "imageUrl": "https://picsum.photos/seed/pdf4/150/200",
+      "imageHint": "document content"
+    },
+    {
+      "id": "pdf-thumb-5",
+      "description": "PDF page 5 thumbnail",
+      "imageUrl": "https://picsum.photos/seed/pdf5/150/200",
+      "imageHint": "document table"
+    },
+    {
+      "id": "pdf-thumb-6",
+      "description": "PDF page 6 thumbnail",
+      "imageUrl": "https://picsum.photos/seed/pdf6/150/200",
+      "imageHint": "signature page"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# Obsidian settings and caches
+.obsidian/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Log and Temp files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# IDE and Editor files
+.vscode/
+.idea/
+
+# If you want to ignore raw source materials (uncomment below if needed)
+# raw/assets/*.pdf
+# raw/assets/*.png
+# raw/assets/*.jpg
