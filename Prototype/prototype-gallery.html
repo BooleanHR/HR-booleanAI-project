@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR BooleanAI — 프로토타입 비교 갤러리</title>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0f17;
+  --surface:#161825;
+  --surface2:#1e2236;
+  --border:#252840;
+  --border-hover:#3a3f6e;
+  --figma:#7c6fff;
+  --firebase:#f4a225;
+  --opus:#00c8a0;
+  --text:#e2e4f6;
+  --muted:#7880b0;
+  --radius:12px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Pretendard',sans-serif;min-height:100vh;}
+
+/* ── Header ── */
+header{padding:52px 48px 40px;text-align:center;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);padding:6px 16px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,var(--figma),var(--opus));}
+h1{font-size:clamp(24px,3.5vw,42px);font-weight:800;letter-spacing:-.04em;line-height:1.15;}
+h1 em{font-style:normal;background:linear-gradient(135deg,#a78bfa 0%,#38bdf8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.subtitle{margin-top:10px;color:var(--muted);font-size:14px;line-height:1.7;}
+
+/* ── Tool header row ── */
+.tool-header-row{
+  display:grid;
+  grid-template-columns: 200px 1fr 1fr 1fr;
+  gap:16px;
+  padding:24px 48px 12px;
+  position:sticky;top:0;z-index:50;
+  background:linear-gradient(to bottom, var(--bg) 85%, transparent);
+  backdrop-filter:blur(8px);
+}
+.tool-header-row .corner{display:flex;align-items:flex-end;padding-bottom:8px;}
+.th-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.tool-col-head{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 12px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);}
+.tool-col-head .tch-name{font-size:14px;font-weight:700;}
+.tool-col-head .tch-count{font-size:11px;color:var(--muted);}
+.figma-head{border-color:#7c6fff33;}.figma-head .tch-name{color:var(--figma);}
+.firebase-head{border-color:#f4a22533;}.firebase-head .tch-name{color:var(--firebase);}
+.opus-head{border-color:#00c8a033;}.opus-head .tch-name{color:var(--opus);}
+
+/* ── Flow rows ── */
+.flow-rows{padding:0 48px 80px;display:flex;flex-direction:column;gap:0;}
+
+.flow-row{
+  display:grid;
+  grid-template-columns: 200px 1fr 1fr 1fr;
+  gap:16px;
+  padding:20px 0;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.flow-row:last-child{border-bottom:none;}
+
+/* ── Step marker (left column) ── */
+.step-col{display:flex;flex-direction:column;align-items:center;padding-top:4px;gap:10px;position:relative;}
+.step-line{position:absolute;left:50%;top:60px;bottom:-20px;width:2px;background:linear-gradient(to bottom,var(--border),transparent);transform:translateX(-50%);}
+.flow-row:last-child .step-line{display:none;}
+.step-num{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;flex-shrink:0;border:2px solid var(--border);}
+.step-info{text-align:center;}
+.step-icon{font-size:18px;line-height:1;margin-bottom:4px;}
+.step-name{font-size:12px;font-weight:700;line-height:1.3;color:var(--text);}
+.step-desc{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.5;}
+
+/* step colours per row index */
+.s1 .step-num{background:#7c6fff18;border-color:#7c6fff44;color:#a78bfa;}
+.s2 .step-num{background:#38bdf818;border-color:#38bdf844;color:#38bdf8;}
+.s3 .step-num{background:#f4a22518;border-color:#f4a22544;color:#fbbf24;}
+.s4 .step-num{background:#f4727218;border-color:#f4727244;color:#f87171;}
+.s5 .step-num{background:#34d39918;border-color:#34d39944;color:#34d399;}
+.s6 .step-num{background:#c084fc18;border-color:#c084fc44;color:#c084fc;}
+
+/* ── Screen card ── */
+.screen-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .22s,box-shadow .22s,border-color .22s;}
+.screen-card:hover{transform:translateY(-5px);}
+.screen-card.figma-card:hover{border-color:var(--figma);box-shadow:0 16px 40px #7c6fff1a;}
+.screen-card.firebase-card:hover{border-color:var(--firebase);box-shadow:0 16px 40px #f4a2251a;}
+.screen-card.opus-card:hover{border-color:var(--opus);box-shadow:0 16px 40px #00c8a01a;}
+
+.card-img-wrap{position:relative;width:100%;overflow:hidden;background:#0a0c14;}
+.card-img-wrap img{width:100%;display:block;height:220px;object-fit:cover;object-position:top;transition:transform .4s;}
+.screen-card:hover .card-img-wrap img{transform:scale(1.03);}
+
+.empty-card{display:flex;align-items:center;justify-content:center;height:220px;color:var(--muted);font-size:12px;border-radius:var(--radius);border:1px dashed var(--border);background:var(--surface);}
+
+.card-info{padding:12px 14px;border-top:1px solid var(--border);}
+.card-snum{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.figma-card .card-snum{color:var(--figma);}
+.firebase-card .card-snum{color:var(--firebase);}
+.opus-card .card-snum{color:var(--opus);}
+.card-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.card-sub{font-size:11px;color:var(--muted);line-height:1.5;}
+
+/* ── Lightbox ── */
+#lb{display:none;position:fixed;inset:0;background:rgba(5,7,18,.93);z-index:1000;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:20px;}
+#lb.open{display:flex;}
+#lb img{max-height:88vh;max-width:88vw;border-radius:10px;box-shadow:0 40px 80px rgba(0,0,0,.7);object-fit:contain;}
+#lb-close{position:fixed;top:18px;right:24px;font-size:28px;color:#fff;opacity:.65;cursor:pointer;background:none;border:none;line-height:1;transition:opacity .2s;}
+#lb-close:hover{opacity:1;}
+#lb-cap{color:var(--muted);font-size:13px;max-width:600px;text-align:center;}
+.lb-nav{display:flex;gap:10px;}
+.lb-btn{background:var(--surface2);border:1px solid var(--border-hover);color:var(--text);padding:8px 22px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:background .2s;}
+.lb-btn:hover{background:var(--border-hover);}
+
+footer{text-align:center;padding:28px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);}
+footer strong{color:var(--text);}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="badge"><span class="badge-dot"></span>HR BooleanAI Project</div>
+  <h1>프로토타입 <em>UX Flow</em> 비교</h1>
+  <p class="subtitle">Figma Make · Firebase Studio · Opus — AI 도구별 화면을 UX 흐름 순서로 세로 비교</p>
+</header>
+
+<!-- Sticky tool header -->
+<div class="tool-header-row">
+  <div class="corner"><span class="th-label">Flow Step</span></div>
+  <div class="tool-col-head figma-head">
+    <span class="tch-name">🎨 Figma Make</span>
+    <span class="tch-count">4 screens</span>
+  </div>
+  <div class="tool-col-head firebase-head">
+    <span class="tch-name">🔥 Firebase Studio</span>
+    <span class="tch-count">4 screens</span>
+  </div>
+  <div class="tool-col-head opus-head">
+    <span class="tch-name">⚡ Opus v0.1</span>
+    <span class="tch-count">6 screens</span>
+  </div>
+</div>
+
+<!-- ── Flow Rows ── -->
+<div class="flow-rows">
+
+  <!-- STEP 01 – 로그인 -->
+  <div class="flow-row s1" id="step1">
+    <div class="step-col">
+      <div class="step-num">01</div>
+      <div class="step-info">
+        <div class="step-icon">🔑</div>
+        <div class="step-name">로그인</div>
+        <div class="step-desc">관리자/운영자<br>계정 인증</div>
+      </div>
+      <div class="step-line"></div>
+    </div>
+    <div class="screen-card figma-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Figma-Make Prototype Capture/Figma-Make_prototype (1).png" alt="Figma Screen 1" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Figma · Screen 01</div>
+        <div class="card-title">로그인 & 대시보드 개요</div>
+        <div class="card-sub">B2B SaaS 인증 + 메인 레이아웃</div>
+      </div>
+    </div>
+    <div class="screen-card firebase-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Firebase studio Capture/FireBase-studio Capture (1).png" alt="Firebase Screen 1" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Firebase · Screen 01</div>
+        <div class="card-title">메인 대시보드</div>
+        <div class="card-sub">React + Tailwind CSS 기반 레이아웃</div>
+      </div>
+    </div>
+    <div class="screen-card opus-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Opus Prototype Capture/Opus_Prototype v0.1 (1).png" alt="Opus Screen 1" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Opus · Screen 01</div>
+        <div class="card-title">전체 대시보드 뷰</div>
+        <div class="card-sub">네비게이션 + 전체 레이아웃 구조</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 02 – 폴더 스캔 -->
+  <div class="flow-row s2" id="step2">
+    <div class="step-col">
+      <div class="step-num">02</div>
+      <div class="step-info">
+        <div class="step-icon">📂</div>
+        <div class="step-name">폴더 스캔</div>
+        <div class="step-desc">채용공고 폴더<br>경로 스캔·트리뷰</div>
+      </div>
+      <div class="step-line"></div>
+    </div>
+    <div class="screen-card figma-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Figma-Make Prototype Capture/Figma-Make_prototype (2).png" alt="Figma Screen 2" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Figma · Screen 02</div>
+        <div class="card-title">폴더 스캔 & 트리뷰</div>
+        <div class="card-sub">지원자 폴더 구조 탐색</div>
+      </div>
+    </div>
+    <div class="screen-card firebase-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Firebase studio Capture/FireBase-studio Capture (2).png" alt="Firebase Screen 2" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Firebase · Screen 02</div>
+        <div class="card-title">폴더 스캔 결과</div>
+        <div class="card-sub">트리뷰 + 검증 시작 버튼</div>
+      </div>
+    </div>
+    <div class="screen-card opus-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Opus Prototype Capture/Opus_Prototype v0.1 (2).png" alt="Opus Screen 2" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Opus · Screen 02</div>
+        <div class="card-title">통계 카드 영역</div>
+        <div class="card-sub">총 검증·완료·확인필요·수동큐 KPI</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 03 – 메인 대시보드 -->
+  <div class="flow-row s3" id="step3">
+    <div class="step-col">
+      <div class="step-num">03</div>
+      <div class="step-info">
+        <div class="step-icon">📊</div>
+        <div class="step-name">메인 대시보드</div>
+        <div class="step-desc">통계 카드 +<br>검증 결과 테이블</div>
+      </div>
+      <div class="step-line"></div>
+    </div>
+    <div class="screen-card figma-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Figma-Make Prototype Capture/Figma-Make_prototype (3).png" alt="Figma Screen 3" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Figma · Screen 03</div>
+        <div class="card-title">검증 결과 테이블</div>
+        <div class="card-sub">통계 카드 + 상태 배지 테이블</div>
+      </div>
+    </div>
+    <div class="screen-card firebase-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Firebase studio Capture/FireBase-studio Capture (3).png" alt="Firebase Screen 3" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Firebase · Screen 03</div>
+        <div class="card-title">검증 결과 테이블</div>
+        <div class="card-sub">수험번호·이름·서류종류·신뢰도</div>
+      </div>
+    </div>
+    <div class="screen-card opus-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Opus Prototype Capture/Opus_Prototype v0.1 (3).png" alt="Opus Screen 3" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Opus · Screen 03</div>
+        <div class="card-title">검증 결과 리스트</div>
+        <div class="card-sub">탭 네비(전체/확인필요/수동리뷰)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 04 – 상세 검토 -->
+  <div class="flow-row s4" id="step4">
+    <div class="step-col">
+      <div class="step-num">04</div>
+      <div class="step-info">
+        <div class="step-icon">🔍</div>
+        <div class="step-name">상세 검토</div>
+        <div class="step-desc">병렬 캡처 뷰어<br>Triple Check · AI</div>
+      </div>
+      <div class="step-line"></div>
+    </div>
+    <div class="screen-card figma-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Figma-Make Prototype Capture/Figma-Make_prototype (4).png" alt="Figma Screen 4" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Figma · Screen 04</div>
+        <div class="card-title">상세 검토 & 알림 모달</div>
+        <div class="card-sub">병렬 캡처 + Triple Check + AI 판정</div>
+      </div>
+    </div>
+    <div class="screen-card firebase-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Firebase studio Capture/FireBase-studio Capture (4).png" alt="Firebase Screen 4" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Firebase · Screen 04</div>
+        <div class="card-title">상세 검토 모달</div>
+        <div class="card-sub">병렬 캡처 뷰어 + 데이터 비교</div>
+      </div>
+    </div>
+    <div class="screen-card opus-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Opus Prototype Capture/Opus_Prototype v0.1 (4).png" alt="Opus Screen 4" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Opus · Screen 04</div>
+        <div class="card-title">상세 검토 화면</div>
+        <div class="card-sub">Vision LLM + Triple Check 테이블</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 05 – 승인 / 반려 -->
+  <div class="flow-row s5" id="step5">
+    <div class="step-col">
+      <div class="step-num">05</div>
+      <div class="step-info">
+        <div class="step-icon">✅</div>
+        <div class="step-name">승인 / 반려</div>
+        <div class="step-desc">Human-in-the-loop<br>최종 결정</div>
+      </div>
+      <div class="step-line"></div>
+    </div>
+    <div class="empty-card">화면 추가 예정</div>
+    <div class="empty-card">화면 추가 예정</div>
+    <div class="screen-card opus-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Opus Prototype Capture/Opus_Prototype v0.1 (5).png" alt="Opus Screen 5" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Opus · Screen 05</div>
+        <div class="card-title">알림 발송 모달</div>
+        <div class="card-sub">체크박스 선택 + 이메일 미리보기</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 06 – 알림 & 리포트 -->
+  <div class="flow-row s6" id="step6">
+    <div class="step-col">
+      <div class="step-num">06</div>
+      <div class="step-info">
+        <div class="step-icon">📧</div>
+        <div class="step-name">알림 & 리포트</div>
+        <div class="step-desc">불일치 발송<br>Excel · PDF 내보내기</div>
+      </div>
+    </div>
+    <div class="empty-card">화면 추가 예정</div>
+    <div class="empty-card">화면 추가 예정</div>
+    <div class="screen-card opus-card" onclick="openLb(this)">
+      <div class="card-img-wrap">
+        <img src="1. Capture/Opus Prototype Capture/Opus_Prototype v0.1 (6).png" alt="Opus Screen 6" loading="lazy">
+      </div>
+      <div class="card-info">
+        <div class="card-snum">Opus · Screen 06</div>
+        <div class="card-title">내보내기 & 리포트</div>
+        <div class="card-sub">Excel (.xlsx) + 감사 PDF 생성</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /flow-rows -->
+
+<footer>
+  <strong>HR BooleanAI</strong> — Prototype Comparison Gallery &nbsp;·&nbsp; UX Flow Ver. &nbsp;·&nbsp; 2026
+</footer>
+
+<!-- Lightbox -->
+<div id="lb" onclick="closeLb(event)">
+  <button id="lb-close" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div id="lb-cap"></div>
+  <div class="lb-nav">
+    <button class="lb-btn" onclick="stepLb(-1);event.stopPropagation()">◀ 이전</button>
+    <button class="lb-btn" onclick="stepLb(1);event.stopPropagation()">다음 ▶</button>
+  </div>
+</div>
+
+<script>
+  let cards = [], cur = 0;
+  document.addEventListener('DOMContentLoaded', () => {
+    cards = Array.from(document.querySelectorAll('.screen-card[onclick]'));
+  });
+  function openLb(el) {
+    cur = cards.indexOf(el);
+    showLb();
+  }
+  function showLb() {
+    const el = cards[cur];
+    const img = el.querySelector('img');
+    const title = el.querySelector('.card-title').textContent;
+    const snum = el.querySelector('.card-snum').textContent;
+    document.getElementById('lb-img').src = img.src;
+    document.getElementById('lb-cap').textContent = snum + ' — ' + title;
+    document.getElementById('lb').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLb(e) {
+    if (e && e.target.id !== 'lb' && e.target.id !== 'lb-close') return;
+    document.getElementById('lb').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function stepLb(d) {
+    cur = (cur + d + cards.length) % cards.length;
+    showLb();
+  }
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lb');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowRight') stepLb(1);
+    if (e.key === 'ArrowLeft') stepLb(-1);
+    if (e.key === 'Escape') { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  });
+</script>
+</body>
+</html>
