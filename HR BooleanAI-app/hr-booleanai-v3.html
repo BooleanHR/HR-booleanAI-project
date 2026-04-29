@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR BooleanAI — 서류 진위확인 AI 솔루션</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:#06080f;color:#dce4f0;line-height:1.6;overflow-x:hidden}
+
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════ */
+:root{
+  --bg:#06080f;
+  --s1:#0b0f1a;
+  --s2:#101522;
+  --s3:#161d2e;
+  --s4:#1c2438;
+  --bd1:rgba(255,255,255,.06);
+  --bd2:rgba(255,255,255,.1);
+  --bd3:rgba(255,255,255,.16);
+  --tx0:#dce4f0;
+  --tx1:rgba(220,228,240,.65);
+  --tx2:rgba(220,228,240,.38);
+  --tx3:rgba(220,228,240,.2);
+  --acc:#00d4aa;
+  --acc2:rgba(0,212,170,.12);
+  --acc3:rgba(0,212,170,.3);
+  --red:#ff4d6d;
+  --red2:rgba(255,77,109,.12);
+  --red3:rgba(255,77,109,.3);
+  --yel:#f5c842;
+  --yel2:rgba(245,200,66,.12);
+  --blu:#4d8fff;
+  --blu2:rgba(77,143,255,.12);
+  --mono:'JetBrains Mono',monospace;
+  --r:8px;
+  --rl:14px;
+  --sh:0 8px 32px rgba(0,0,0,.5);
+}
+
+/* ═══════════════════════════════════════════════
+   SCREEN SYSTEM
+═══════════════════════════════════════════════ */
+.page{display:none}
+.page.on{display:block}
+#pg-landing.on{display:block}
+#pg-login.on{display:flex;min-height:100vh;align-items:center;justify-content:center}
+#pg-app.on{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ═══════════════════════════════════════════════
+   SHARED COMPONENTS
+═══════════════════════════════════════════════ */
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-acc{background:var(--acc);color:#000;box-shadow:0 0 24px rgba(0,212,170,.2)}
+.btn-acc:hover{transform:translateY(-1px);box-shadow:0 4px 32px rgba(0,212,170,.35)}
+.btn-ghost{background:transparent;color:var(--tx1);border:1px solid var(--bd2)}
+.btn-ghost:hover{border-color:var(--bd3);color:var(--tx0)}
+.btn-danger{background:var(--red2);color:var(--red);border:1px solid var(--red3)}
+.btn-danger:hover{background:rgba(255,77,109,.22)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-lg{padding:13px 28px;font-size:15px}
+.w-full{width:100%}
+
+/* Form inputs */
+.inp{width:100%;background:var(--s3);border:1px solid var(--bd2);color:var(--tx0);font-size:13px;font-family:'Noto Sans KR',sans-serif;padding:10px 13px;border-radius:var(--r);outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--acc)}
+.inp::placeholder{color:var(--tx3)}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-family:var(--mono);font-size:10px;font-weight:700}
+.b-pass{background:rgba(0,212,170,.13);color:var(--acc)}
+.b-fail{background:rgba(255,77,109,.13);color:var(--red)}
+.b-manual{background:rgba(245,200,66,.13);color:var(--yel)}
+
+/* Modal */
+.overlay{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.72);backdrop-filter:blur(5px);display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.overlay.open{display:flex}
+.modal-box{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--rl);width:100%;animation:mIn .22s ease;box-shadow:0 32px 80px rgba(0,0,0,.6)}
+@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--bd1)}
+.modal-head h2{font-size:15px;font-weight:700}
+.modal-close{background:transparent;border:1px solid var(--bd2);color:var(--tx2);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.modal-close:hover{border-color:var(--red3);color:var(--red)}
+.modal-body{padding:22px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 22px;border-top:1px solid var(--bd1)}
+
+/* Toast */
+#toast-wrap{position:fixed;bottom:22px;right:22px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--s2);border:1px solid var(--bd2);border-radius:10px;padding:12px 18px;font-size:13px;color:var(--tx0);box-shadow:var(--sh);transform:translateX(110%);transition:transform .3s ease;min-width:260px}
+.toast.show{transform:translateX(0)}
+
+/* Section utility */
+.sec{padding:96px 48px}
+.con{max-width:1100px;margin:0 auto}
+.sec-label{font-family:var(--mono);font-size:11px;color:var(--acc);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.sec-title{font-size:clamp(26px,4vw,48px);font-weight:900;letter-spacing:-1.5px;line-height:1.08}
+.sec-sub{font-size:16px;color:var(--tx1);margin-top:14px;max-width:500px;font-weight:300}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════════════════════════
+   LANDING — NAV
+═══════════════════════════════════════════════ */
+.lnav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(6,8,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd1)}
+.lnav-logo{font-family:var(--mono);font-size:15px;font-weight:700;color:var(--acc)}
+.lnav-logo em{color:var(--tx0);font-style:normal}
+.lnav-links{display:flex;gap:28px;list-style:none}
+.lnav-links a{font-size:13px;color:var(--tx1);text-decoration:none;transition:color .2s}
+.lnav-links a:hover{color:var(--tx0)}
+.lnav-right{display:flex;gap:10px}
+
+/* ═══════════════════════════════════════════════
+   LANDING — HERO
+═══════════════════════════════════════════════ */
+.hero{min-height:90vh;display:flex;align-items:center;justify-content:center;padding:120px 48px 60px;position:relative;overflow:hidden;text-align:center}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,212,170,.032) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,.032) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(ellipse 80% 60% at 50% 38%,black 0%,transparent 68%)}
+.hero-orb{position:absolute;top:-8%;left:50%;transform:translateX(-50%);width:800px;height:500px;background:radial-gradient(ellipse,rgba(0,212,170,.1) 0%,rgba(0,212,170,.03) 42%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;max-width:920px}
+
+/* Pill badge */
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(0,212,170,.28);background:rgba(0,212,170,.07);border-radius:100px;padding:6px 16px 6px 10px;margin-bottom:36px;font-family:var(--mono);font-size:11px;color:var(--acc);letter-spacing:.5px;animation:fuUp .5s ease both}
+.pill-dot{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes fuUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+.h1{font-size:clamp(38px,6.5vw,78px);font-weight:900;line-height:1.15;letter-spacing:-2.5px;animation:fuUp .6s .07s ease both}
+.h1 .ca{color:var(--acc)}
+.h1-sub{margin-top:22px;font-size:clamp(15px,2vw,19px);font-weight:300;color:var(--tx1);max-width:620px;margin-inline:auto;animation:fuUp .6s .14s ease both}
+.h1-sub strong{color:var(--tx0);font-weight:600}
+
+/* CTA row */
+.cta-row{display:flex;justify-content:center;gap:12px;margin-top:38px;animation:fuUp .6s .28s ease both}
+.btn-hero{font-size:15px;font-weight:700;padding:14px 30px;border-radius:10px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .25s;text-decoration:none;border:none}
+.btn-hero-p{background:var(--acc);color:#000;box-shadow:0 0 36px rgba(0,212,170,.28)}
+.btn-hero-p:hover{transform:translateY(-2px);box-shadow:0 4px 48px rgba(0,212,170,.42)}
+
+/* ═══════════════════════════════════════════════
+   LANDING — PAIN
+═══════════════════════════════════════════════ */
+.pain-grid{display:grid;grid-template-columns:1fr 1fr;margin-top:52px;border:1px solid var(--bd2);border-radius:var(--rl);overflow:hidden;gap:1px;background:var(--bd1)}
+.pain-card{background:var(--s1);padding:34px;position:relative;overflow:hidden;transition:background .2s}
+.pain-card:hover{background:var(--s2)}
+.pain-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.pain-card:hover::after{transform:scaleX(1)}
+.pain-idx{font-family:var(--mono);font-size:10px;color:var(--tx3);margin-bottom:12px}
+.pain-ttl{font-size:18px;font-weight:700;color:var(--acc);margin-bottom:10px;letter-spacing:-.3px}
+.pain-desc{font-size:13px;color:var(--tx1);line-height:1.75}
+
+/* ═══════════════════════════════════════════════
+   LANDING — PROCESS
+═══════════════════════════════════════════════ */
+.proc-row{display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;margin-top:52px;align-items:start}
+.proc-step{background:var(--s2);border:1px solid var(--bd1);border-radius:var(--rl);padding:30px;transition:all .3s}
+.proc-step:hover{border-color:var(--acc);transform:translateY(-3px)}
+.proc-idx{font-family:var(--mono);font-size:10px;color:var(--acc);letter-spacing:1px;margin-bottom:14px}
+.proc-ico{font-size:26px;margin-bottom:12px}
+.proc-ttl{font-size:18px;font-weight:700;margin-bottom:9px;letter-spacing:-.3px}
+.proc-desc{font-size:13px;color:var(--tx1);line-height:1.75}
+.proc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+.ptag{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:100px;border:1px solid}
+.tg{border-color:rgba(0,212,170,.3);color:var(--acc);background:rgba(0,212,170,.06)}
+.tb{border-color:rgba(77,143,255,.3);color:var(--blu);background:rgba(77,143,255,.06)}
+.tr{border-color:rgba(255,77,109,.3);color:var(--red);background:rgba(255,77,109,.06)}
+.proc-arr{display:flex;align-items:center;justify-content:center;padding-top:72px;color:var(--acc);font-size:18px}
+
+/* ═══════════════════════════════════════════════
+   LANDING — DEMO SECTION (SIMULATOR)
+═══════════════════════════════════════════════ */
+.demo-box{background:var(--s1);border:1px solid var(--bd2);border-radius:var(--rl);margin-top:48px;overflow:hidden;padding:34px}
+.sim-container{display:flex;flex-direction:column;gap:20px}
+.sim-step{background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r);padding:20px;opacity:0.3;transition:opacity 0.5s}
+.sim-step.active{opacity:1;border-color:var(--acc)}
+.sim-header{font-size:14px;font-weight:700;color:var(--tx0);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.sim-content{font-family:var(--mono);font-size:12px;color:var(--tx1);background:var(--s3);padding:15px;border-radius:6px;min-height:60px;line-height:1.8}
+.sim-loader{display:inline-block;width:12px;height:12px;border:2px solid var(--tx2);border-top-color:var(--acc);border-radius:50%;animation:spin 1s linear infinite;display:none}
+.sim-step.processing .sim-loader{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sim-btn-wrap{text-align:center;margin-top:20px}
+
+/* ═══════════════════════════════════════════════
+   LANDING — TRUST
+═══════════════════════════════════════════════ */
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.tcard{background:var(--s1);border:1px solid var(--bd1);border-radius:var(--rl);padding:26px;transition:border-color .2s}
+.tcard:hover{border-color:var(--bd2)}
+.tq{font-size:14px;line-height:1.85;color:var(--tx1);margin-bottom:18px}
+.tq strong{color:var(--tx0)}
+.ta{display:flex;align-items:center;gap:10px}
+.tav{width:36px;height:36px;border-radius:8px;background:var(--s2);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:16px}
+.tn{font-size:13px;font-weight:600}
+.tr2{font-size:11px;color:var(--tx2)}
+.logos-row{margin-top:48px;text-align:center}
+.logos-lbl{font-size:11px;color:var(--tx2);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:22px}
+.logos-list{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
+.logo-item{font-family:var(--mono);font-size:13px;color:var(--tx2);transition:color .2s}
+.logo-item:hover{color:var(--tx1)}
+
+/* ═══════════════════════════════════════════════
+   LANDING — CTA + FOOTER
+═══════════════════════════════════════════════ */
+.cta-sec{background:var(--s1);text-align:center;padding:110px 48px;position:relative;overflow:hidden}
+.cta-orb{position:absolute;bottom:-80px;left:50%;transform:translateX(-50%);width:600px;height:360px;background:radial-gradient(ellipse,rgba(0,212,170,.09) 0%,transparent 65%);pointer-events:none}
+.cta-inner{position:relative;max-width:660px;margin:0 auto}
+.cta-ttl{font-size:clamp(28px,5vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:16px}
+.cta-sub{font-size:16px;color:var(--tx1);margin-bottom:32px}
+.cta-form{display:flex;gap:10px;max-width:440px;margin:0 auto}
+.cta-inp{flex:1;background:var(--s2);border:1px solid var(--bd2);color:var(--tx0);font-size:14px;font-family:'Noto Sans KR',sans-serif;padding:12px 15px;border-radius:var(--r);outline:none;transition:border-color .2s}
+.cta-inp:focus{border-color:var(--acc)}
+.cta-inp::placeholder{color:var(--tx3)}
+.cta-sbmt{background:var(--acc);color:#000;font-size:14px;font-weight:700;padding:12px 20px;border-radius:var(--r);border:none;cursor:pointer;white-space:nowrap;font-family:'Noto Sans KR',sans-serif;transition:all .2s}
+.cta-sbmt:hover{transform:translateY(-1px);box-shadow:0 4px 30px rgba(0,212,170,.38)}
+.cta-note{font-size:12px;color:var(--tx2);margin-top:12px}
+.cta-note a{color:var(--acc);cursor:pointer;text-decoration:underline}
+footer{background:var(--s1);border-top:1px solid var(--bd1);padding:32px 48px;display:flex;align-items:center;justify-content:space-between}
+.foot-logo{font-family:var(--mono);font-size:14px;color:var(--acc)}
+.foot-copy{font-size:12px;color:var(--tx2)}
+
+/* ═══════════════════════════════════════════════
+   LOGIN PAGE
+═══════════════════════════════════════════════ */
+.login-bg{position:fixed;inset:0;background:var(--bg);z-index:0}
+.login-grid{position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,212,170,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,170,.03) 1px,transparent 1px);background-size:48px 48px}
+.login-orb{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(0,212,170,.07) 0%,transparent 65%);pointer-events:none}
+.login-card{position:relative;background:var(--s2);border:1px solid var(--bd2);border-radius:18px;padding:44px 40px;width:410px;max-width:90vw;box-shadow:var(--sh),0 0 0 1px rgba(0,212,170,.05);animation:fuUp .45s ease both}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-mark{font-size:30px;margin-bottom:8px}
+.login-logo h2{font-family:var(--mono);font-size:17px;font-weight:700;color:var(--acc)}
+.login-logo p{font-size:13px;color:var(--tx1);margin-top:4px}
+.fg{margin-bottom:16px}
+.fg label{font-size:12px;color:var(--tx1);display:block;margin-bottom:6px;font-weight:500}
+.login-err{background:var(--red2);border:1px solid var(--red3);color:var(--red);border-radius:7px;padding:9px 13px;font-size:13px;margin-top:6px;display:none}
+.login-err.on{display:block}
+.btn-login{width:100%;background:var(--acc);color:#000;font-size:15px;font-weight:700;padding:12px;border-radius:var(--r);border:none;cursor:pointer;margin-top:6px;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 4px 28px rgba(0,212,170,.32)}
+.login-hint{font-size:11px;color:var(--tx2);text-align:center;margin-top:16px;line-height:1.8}
+.login-hint code{font-family:var(--mono);background:var(--s3);padding:2px 5px;border-radius:4px;color:var(--tx1)}
+.login-back{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:18px;font-size:13px;color:var(--tx2);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'Noto Sans KR',sans-serif;width:100%}
+.login-back:hover{color:var(--tx1)}
+
+/* ═══════════════════════════════════════════════
+   APP — TOP NAV
+═══════════════════════════════════════════════ */
+.app-nav{height:54px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--s1);border-bottom:1px solid var(--bd2);z-index:50}
+.app-logo{font-family:var(--mono);font-size:14px;font-weight:700;color:var(--acc);display:flex;align-items:center;gap:7px}
+.alogo-dot{width:7px;height:7px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:blink 2.5s infinite}
+.app-nav-mid{display:flex;gap:6px}
+.anav-btn{background:transparent;border:1px solid var(--bd2);color:var(--tx1);font-size:12px;padding:6px 13px;border-radius:6px;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
+.anav-btn:hover{border-color:var(--bd3);color:var(--tx0)}
+.app-user{display:flex;align-items:center;gap:9px}
+.user-email{font-size:12px;color:var(--tx1);font-family:var(--mono)}
+.role-chip{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:100px;background:var(--acc2);border:1px solid rgba(0,212,170,.25);color:var(--acc)}
+.btn-out{background:transparent;border:1px solid var(--bd1);color:var(--tx2);font-size:12px;padding:5px 11px;border-radius:6px;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.btn-out:hover{border-color:rgba(255,77,109,.4);color:var(--red)}
+
+/* ═══════════════════════════════════════════════
+   APP — BODY LAYOUT
+═══════════════════════════════════════════════ */
+.app-body{display:flex;flex:1;overflow:hidden}
+
+/* Sidebar */
+.app-side{width:216px;flex-shrink:0;background:var(--s2);border-right:1px solid var(--bd1);display:flex;flex-direction:column;overflow-y:auto}
+.side-scan{padding:13px 12px;border-bottom:1px solid var(--bd1)}
+.side-lbl{font-size:10px;color:var(--tx2);font-family:var(--mono);letter-spacing:.5px;margin-bottom:7px;text-transform:uppercase}
+.side-path{width:100%;background:var(--s3);border:1px solid var(--bd2);color:var(--tx0);font-size:10px;font-family:var(--mono);padding:7px 8px;border-radius:6px;outline:none;margin-bottom:7px;transition:border-color .2s}
+.side-path:focus{border-color:var(--acc)}
+.btn-scan{width:100%;background:var(--acc);color:#000;font-size:12px;font-weight:700;padding:8px;border-radius:6px;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:opacity .2s}
+.btn-scan:hover{opacity:.88}
+.scan-st{font-size:10px;color:var(--acc);margin-top:5px;font-family:var(--mono);min-height:13px}
+.side-tree{flex:1;padding:9px}
+.tree-lbl{font-size:9px;color:var(--tx2);font-family:var(--mono);letter-spacing:.8px;padding:5px 7px 3px;text-transform:uppercase}
+.ti{font-size:11px;color:var(--tx1);padding:5px 7px;border-radius:5px;cursor:pointer;display:flex;align-items:center;gap:4px;transition:all .15s}
+.ti:hover{background:rgba(255,255,255,.04);color:var(--tx0)}
+.ti.on{background:var(--acc2);color:var(--acc)}
+.ti-sub{padding-left:13px}
+.tf{font-size:10px;color:var(--tx2);padding:3px 7px;font-family:var(--mono);display:flex;align-items:center;gap:4px}
+.side-vbtn{padding:10px}
+.btn-verify{width:100%;background:var(--acc);color:#000;font-size:12px;font-weight:700;padding:10px;border-radius:8px;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-verify:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,212,170,.3)}
+
+/* Main content */
+.app-main{flex:1;overflow-y:auto;background:var(--bg);display:flex;flex-direction:column}
+
+/* Action bar */
+.act-bar{padding:10px 18px;background:var(--s1);border-bottom:1px solid var(--bd1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.act-left{display:flex;align-items:center;gap:8px}
+.act-right{display:flex;gap:7px}
+.act-btn{background:transparent;border:1px solid var(--bd2);color:var(--tx1);font-size:11px;padding:6px 11px;border-radius:6px;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
+.act-btn:hover{border-color:var(--bd3);color:var(--tx0)}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;padding:14px 18px;flex-shrink:0}
+.sc{background:var(--s1);border:1px solid var(--bd1);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden;transition:border-color .2s}
+.sc:hover{border-color:var(--bd2)}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sc-all::before{background:var(--blu)}
+.sc-pass::before{background:var(--acc)}
+.sc-fail::before{background:var(--red)}
+.sc-manual::before{background:var(--yel)}
+.sc-lbl{font-size:10px;color:var(--tx2);margin-bottom:5px;font-family:var(--mono);letter-spacing:.3px}
+.sc-num{font-family:var(--mono);font-size:30px;font-weight:700;line-height:1}
+.c-all{color:var(--blu)}
+.c-pass{color:var(--acc)}
+.c-fail{color:var(--red)}
+.c-manual{color:var(--yel)}
+.sc-sub{font-size:10px;color:var(--tx2);margin-top:4px}
+
+/* Tabs */
+.app-tabs{display:flex;border-bottom:1px solid var(--bd1);background:var(--s1);flex-shrink:0;padding:0 18px}
+.at{padding:9px 16px;font-size:13px;color:var(--tx1);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;font-weight:500;white-space:nowrap}
+.at.on{color:var(--acc);border-color:var(--acc)}
+.at:hover:not(.on){color:var(--tx0)}
+
+/* Table */
+.tbl-wrap{flex:1;overflow:auto;padding:14px 18px 18px}
+.dtbl{width:100%;border-collapse:collapse}
+.dtbl th{font-family:var(--mono);font-size:10px;color:var(--tx2);letter-spacing:.8px;text-align:left;padding:8px 11px;background:var(--s2);border-bottom:1px solid var(--bd2);text-transform:uppercase;position:sticky;top:0;z-index:1}
+.dtbl td{font-size:12px;color:var(--tx1);padding:10px 11px;border-bottom:1px solid var(--bd1);vertical-align:middle}
+.dtbl tr:hover td{background:rgba(255,255,255,.02)}
+.dtbl td.nm{font-weight:600;color:var(--tx0)}
+.dtbl td.code{font-family:var(--mono);font-size:11px;color:var(--tx2)}
+/* Confidence bar */
+.conf-wrap{display:flex;align-items:center;gap:6px}
+.conf-bg{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.conf-fill{height:100%;border-radius:2px;transition:width .4s}
+.conf-n{font-family:var(--mono);font-size:10px;color:var(--tx1);min-width:24px}
+.btn-view{background:transparent;border:1px solid var(--bd2);color:var(--tx1);font-size:11px;padding:5px 10px;border-radius:5px;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif}
+.btn-view:hover{border-color:var(--acc);color:var(--acc)}
+
+/* ═══════════════════════════════════════════════
+   MODALS — DETAIL
+═══════════════════════════════════════════════ */
+.cap-viewer{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.cap-panel{background:var(--s3);border:1px solid var(--bd1);border-radius:var(--r);overflow:hidden}
+.cap-lbl{background:rgba(255,255,255,.04);padding:8px 13px;font-family:var(--mono);font-size:10px;color:var(--tx2);letter-spacing:.5px}
+.cap-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:48px}
+.cmp-tbl{width:100%;border-collapse:collapse}
+.cmp-tbl th{font-family:var(--mono);font-size:10px;color:var(--tx2);letter-spacing:.8px;text-align:left;padding:8px 11px;background:var(--s3);border-bottom:1px solid var(--bd2);text-transform:uppercase}
+.cmp-tbl td{font-size:12px;padding:10px 11px;border-bottom:1px solid var(--bd1);vertical-align:middle}
+.cmp-tbl td.fn{color:var(--tx1);font-weight:500}
+.cmp-tbl td.v{font-family:var(--mono)}
+.cell-ok{color:var(--acc)}
+.cell-ng{color:var(--red);font-weight:700;background:rgba(255,77,109,.04)}
+.ai-box{background:var(--s3);border:1px solid var(--bd2);border-radius:var(--r);padding:16px;margin-top:14px}
+.ai-head{font-family:var(--mono);font-size:11px;color:var(--acc);margin-bottom:8px}
+.ai-txt{font-size:13px;color:var(--tx1);line-height:1.8}
+
+/* ═══════════════════════════════════════════════
+   MODALS — NOTI
+═══════════════════════════════════════════════ */
+.noti-list{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+.noti-item{display:flex;align-items:center;gap:11px;background:var(--s3);border:1px solid var(--bd1);border-radius:var(--r);padding:12px 14px;cursor:pointer;transition:all .2s;user-select:none}
+.noti-item:hover{border-color:var(--bd2)}
+.ncheck{width:17px;height:17px;border-radius:5px;border:1px solid var(--bd2);background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;transition:all .2s}
+.ncheck.on{background:var(--acc);border-color:var(--acc);color:#000}
+.ninfo{flex:1}
+.nname{font-size:13px;font-weight:600;margin-bottom:2px}
+.ndetail{font-size:11px;color:var(--tx2)}
+.prev-box{background:var(--s3);border:1px solid rgba(0,212,170,.2);border-radius:var(--r);padding:14px}
+.prev-head{font-family:var(--mono);font-size:11px;color:var(--acc);margin-bottom:9px}
+.prev-text{font-size:13px;color:var(--tx1);line-height:1.75}
+.prev-link{color:var(--acc);font-family:var(--mono);font-size:12px}
+
+/* ═══════════════════════════════════════════════
+   MODALS — SITE SETTINGS
+═══════════════════════════════════════════════ */
+.site-row{display:grid;grid-template-columns:150px 1fr 1fr;gap:11px;align-items:center;padding:11px 0;border-bottom:1px solid var(--bd1)}
+.site-row:last-child{border-bottom:none}
+.site-nm{font-size:13px;font-weight:600;display:flex;align-items:center;gap:7px}
+.site-inp{background:var(--s3);border:1px solid var(--bd2);color:var(--tx0);font-size:12px;font-family:var(--mono);padding:8px 10px;border-radius:6px;outline:none;transition:border-color .2s;width:100%}
+.site-inp:focus{border-color:var(--acc)}
+</style>
+</head>
+<body>
+
+<!-- ════════════ TOAST ════════════ -->
+<div id="toast-wrap"></div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: LANDING
+══════════════════════════════════════════ -->
+<div id="pg-landing" class="page on">
+
+  <!-- Nav -->
+  <nav class="lnav">
+    <div class="lnav-logo">HR<em>Boolean</em>AI</div>
+    <ul class="lnav-links">
+      <li><a href="#sec-pain">문제점</a></li>
+      <li><a href="#sec-proc">작동 방식</a></li>
+      <li><a href="#sec-demo">검증 시뮬레이션</a></li>
+      <li><a href="#sec-trust">도입 효과</a></li>
+    </ul>
+    <div class="lnav-right">
+      <button class="btn btn-ghost btn-sm" onclick="goPage('pg-login')">대시보드 로그인</button>
+      <button class="btn btn-acc btn-sm" onclick="document.getElementById('sec-demo').scrollIntoView({behavior:'smooth'})">시뮬레이션 체험</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb"></div>
+    <div class="hero-inner">
+      <div class="pill"><span class="pill-dot"></span>AI 검증 엔진 · 공공/엔터프라이즈 최적화</div>
+      <h1 class="h1">
+        채용 서류 교차 검증,<br>
+        <span class="ca">AI로 자동화</span> 하세요<br>
+        <span style="font-size:.6em">수기 검증의 한계, 이제 끝입니다</span>
+      </h1>
+      <p class="h1-sub">
+        <strong>담당자의 육안 검증에 의존하던 채용 서류 평가.</strong><br>
+        이제 발급기관 API 연동과 Vision OCR을 통해 정확하고 빠르게 처리합니다.
+      </p>
+      <div class="cta-row">
+        <button class="btn-hero btn-hero-p" onclick="document.getElementById('sec-demo').scrollIntoView({behavior:'smooth'})">작동 방식 시뮬레이션</button>
+        <button class="btn-hero btn-hero-s" onclick="goPage('pg-login')">대시보드 로그인</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN -->
+  <section class="sec" id="sec-pain" style="background:linear-gradient(180deg,var(--bg) 0%,var(--s1) 100%)">
+    <div class="con">
+      <div class="rv">
+        <div class="sec-label">// THE PROBLEM</div>
+        <h2 class="sec-title">실무자를 짓누르는<br>수기 검증의 리스크</h2>
+      </div>
+      <div class="pain-grid rv">
+        <div class="pain-card">
+          <div class="pain-idx">// 01</div>
+          <div class="pain-ttl">감사 지적 = 담당자 개인 징계</div>
+          <p class="pain-desc">위조 또는 오기재 서류가 합격 후 감사에서 발견되면, 담당자 개인이 소명하고 책임을 져야 합니다. "눈으로 확인했다"는 주장은 보호막이 되지 못합니다.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-idx">// 02</div>
+          <div class="pain-ttl">단축되는 채용 일정, 부족한 시간</div>
+          <p class="pain-desc">내부 사정으로 전형 간격이 짧아져도 검토해야 할 서류의 양은 같습니다. 물리적인 시간 부족은 결국 치명적인 오류와 직결됩니다.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-idx">// 03</div>
+          <div class="pain-ttl">애매한 서류 보완에 낭비되는 리소스</div>
+          <p class="pain-desc">모호한 공고나 지원서 불일치 시, 귀책 사유를 피하고자 지원자에게 일일이 보완 제출을 요구하고 재검증하는 데 엄청난 시간이 소모됩니다.</p>
+        </div>
+        <div class="pain-card">
+          <div class="pain-idx">// 04</div>
+          <div class="pain-ttl">수천 건의 수기 대조, 휴먼 에러</div>
+          <p class="pain-desc">수많은 증빙 서류를 눈으로 직접 확인하는 방식은 필연적으로 집중력 저하를 유발합니다. 아무리 꼼꼼한 실무자라도 100% 완벽할 수는 없습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="sec" id="sec-proc" style="background:var(--s1)">
+    <div class="con">
+      <div class="rv">
+        <div class="sec-label">// HOW IT WORKS</div>
+        <h2 class="sec-title">입력 → 엔진 → 결과<br>단 3단계</h2>
+        <p class="sec-sub">서류를 올리면 AI가 3중 교차검증 후 결과와 증적을 자동 생성합니다.</p>
+      </div>
+      <div class="proc-row rv">
+        <div class="proc-step">
+          <div class="proc-idx">STEP 01 // INPUT</div>
+          <div class="proc-ico">📂</div>
+          <div class="proc-ttl">서류 업로드</div>
+          <p class="proc-desc">PDF, JPG, PNG, DOCX 어떤 형식도 OK. 드래그앤드롭으로 폴더째 업로드하면 AI가 서류 종류를 자동 분류합니다.</p>
+          <div class="proc-tags"><span class="ptag tb">입사지원서</span><span class="ptag tb">학위증명서</span><span class="ptag tb">자격증</span><span class="ptag tb">경력증명서</span></div>
+        </div>
+        <div class="proc-arr">→</div>
+        <div class="proc-step" style="border-color:rgba(0,212,170,.28)">
+          <div class="proc-idx">STEP 02 // ENGINE</div>
+          <div class="proc-ico">⚡</div>
+          <div class="proc-ttl">Triple Check Loop</div>
+          <p class="proc-desc">① 지원자 기재 파싱 → ② Gemini Vision OCR → ③ 정부24·Q-Net 기관 DB 실시간 대조. 3중 교차검증으로 위조를 원천 차단합니다.</p>
+          <div class="proc-tags"><span class="ptag tg">Gemini Vision</span><span class="ptag tg">정부24 API</span><span class="ptag tg">Q-Net</span></div>
+        </div>
+        <div class="proc-arr">→</div>
+        <div class="proc-step">
+          <div class="proc-idx">STEP 03 // OUTPUT</div>
+          <div class="proc-ico">📋</div>
+          <div class="proc-ttl">결과 + 증적 자동 생성</div>
+          <p class="proc-desc">PASS/FAIL 판정, 감사원 제출용 PDF, 엑셀 결과 파일이 자동 생성. 불일치 건은 지원자에게 자동 알림 발송.</p>
+          <div class="proc-tags"><span class="ptag tr">불일치 알림</span><span class="ptag tg">PDF 리포트</span><span class="ptag tg">Excel 내보내기</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE DEMO (SIMULATOR) -->
+  <section class="sec" id="sec-demo" style="border-top:1px solid var(--bd1);border-bottom:1px solid var(--bd1)">
+    <div class="con">
+      <div class="rv">
+        <div class="sec-label">// LIVE INTERACTIVE</div>
+        <h2 class="sec-title">검증 엔진 시뮬레이션</h2>
+        <p class="sec-sub">AI가 지원자의 서류를 어떻게 추출하고 기관 DB와 대조하는지 확인해 보세요.</p>
+      </div>
+      <div class="demo-box rv">
+        <div class="sim-container">
+          <div class="sim-step active" id="step-1">
+            <div class="sim-header"><span>STEP 1. 서류 업로드 및 영역 지정 (OCR)</span> <div class="sim-loader"></div></div>
+            <div class="sim-content" id="content-1">대기 중...</div>
+          </div>
+          <div class="sim-step" id="step-2">
+            <div class="sim-header"><span>STEP 2. 발급기관 자동 접속 및 조회 (RPA)</span> <div class="sim-loader"></div></div>
+            <div class="sim-content" id="content-2">대기 중...</div>
+          </div>
+          <div class="sim-step" id="step-3">
+            <div class="sim-header"><span>STEP 3. DB 대조 및 결과 판정</span> <div class="sim-loader"></div></div>
+            <div class="sim-content" id="content-3">대기 중...</div>
+          </div>
+        </div>
+        <div class="sim-btn-wrap">
+          <button class="btn btn-acc btn-lg" onclick="runSimulation()" id="sim-btn">▶ 검증 프로세스 시작</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="sec" id="sec-trust" style="background:var(--s1)">
+    <div class="con">
+      <div class="rv" style="text-align:center">
+        <div class="sec-label">// SOCIAL PROOF</div>
+        <h2 class="sec-title">실제 도입 효과</h2>
+      </div>
+      <div class="trust-grid rv">
+        <div class="tcard"><p class="tq">"부적격자 합격 취소로 인한 <strong>법적 분쟁과 소송 소요 비용의 리스크를 완벽하게 차단</strong>할 수 있었습니다. 채용 공정성이 데이터로 증명됩니다."</p><div class="ta"><div class="tav">🏛️</div><div><div class="tn">김 ○ ○</div><div class="tr2">공공기관 채용 PM</div></div></div></div>
+        <div class="tcard"><p class="tq">"애매한 서류나 조회 불가 건에 대해 <strong>일일이 보완을 요청하고 설명해야 했던 업무 시간이 혁신적으로 줄었습니다.</strong> 이제 진짜 채용 기획에 집중합니다."</p><div class="ta"><div class="tav">🏢</div><div><div class="tn">박 ○ ○</div><div class="tr2">채용 담당 매니저</div></div></div></div>
+        <div class="tcard"><p class="tq">"단순 캡처가 아닌, <strong>AI 교차 검증 로그와 발급 기관 대조 이력 자체가 완벽한 감사 소명 자료</strong>가 되어 담당자의 심리적 부담이 크게 줄었습니다."</p><div class="ta"><div class="tav">⚖️</div><div><div class="tn">이 ○ ○</div><div class="tr2">인사/노무 책임자</div></div></div></div>
+      </div>
+      <div class="logos-row rv">
+        <div class="logos-lbl">연동 기관</div>
+        <div class="logos-list">
+          <div class="logo-item">정부24</div><div class="logo-item">Q-Net</div><div class="logo-item">국민건강보험</div><div class="logo-item">OPIc</div><div class="logo-item">TOEIC</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-sec">
+    <div class="cta-orb"></div>
+    <div class="cta-inner rv">
+      <div class="sec-label" style="text-align:center">// GET STARTED</div>
+      <h2 class="cta-ttl">다음 채용,<br>위조 걱정 없이</h2>
+      <p class="cta-sub">지금 데모를 신청하면 실제 서류 100건을 무료로 검증해드립니다.</p>
+      <div class="cta-form">
+        <input type="email" class="cta-inp" placeholder="업무용 이메일을 입력하세요" id="cta-email">
+        <button class="cta-sbmt" onclick="submitCTA()">무료 데모 신청 →</button>
+      </div>
+      <p class="cta-note">또는 — <a onclick="goPage('pg-login')">대시보드 직접 체험하기 →</a></p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-logo">HRBooleanAI</div>
+    <div class="foot-copy">© 2026 HR BooleanAI. 채용 서류 진위확인 AI 솔루션.</div>
+  </footer>
+
+</div><!-- /landing -->
+
+
+<!-- ══════════════════════════════════════════
+     PAGE: LOGIN
+══════════════════════════════════════════ -->
+<div id="pg-login" class="page">
+  <div class="login-bg"></div>
+  <div class="login-grid"></div>
+  <div class="login-orb"></div>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-mark">🛡️</div>
+      <h2>HR BooleanAI</h2>
+      <p>AI 서류 진위확인 솔루션</p>
+    </div>
+    <div class="fg">
+      <label>이메일</label>
+      <input id="l-email" class="inp" type="email" placeholder="test_admin@hrboolean.ai">
+    </div>
+    <div class="fg">
+      <label>비밀번호</label>
+      <input id="l-pw" class="inp" type="password" placeholder="Admin123!">
+    </div>
+    <div id="l-err" class="login-err">이메일 또는 비밀번호가 올바르지 않습니다.</div>
+    <button class="btn-login" onclick="doLogin()">로그인</button>
+    <div class="login-hint">
+      관리자: <code>test_admin@hrboolean.ai</code> / <code>Admin123!</code><br>
+      운영자: <code>test_operator@hrboolean.ai</code> / <code>Oper123!</code>
+    </div>
+    <button class="login-back" onclick="goPage('pg-landing')">← 랜딩페이지로 돌아가기</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     PAGE: APP (DASHBOARD)
+══════════════════════════════════════════ -->
+<div id="pg-app" class="page">
+
+  <!-- Top Nav -->
+  <nav class="app-nav">
+    <div class="app-logo"><span class="alogo-dot"></span>HR BooleanAI</div>
+    <div class="app-nav-mid">
+      <button class="anav-btn" onclick="openModal('m-noti')">📨 불일치 알림 발송</button>
+    </div>
+    <div class="app-user">
+      <span class="user-email" id="u-email">admin</span>
+      <span class="role-chip" id="u-role">ADMIN</span>
+      <button class="btn-out" onclick="doLogout()">로그아웃</button>
+    </div>
+  </nav>
+
+  <div class="app-body">
+
+    <!-- Sidebar -->
+    <aside class="app-side">
+      <div class="side-scan">
+        <div class="side-lbl">채용공고 폴더</div>
+        <input id="folder-path" class="side-path" type="text" value="C:\JobPostings\2026_상반기_공채">
+        <button class="btn-scan" onclick="doScan()">📂 폴더 스캔</button>
+        <div class="scan-st" id="scan-st"></div>
+      </div>
+      <div class="side-tree">
+        <div class="tree-lbl">폴더 구조</div>
+        <div class="ti on">📁 2026_상반기_공채</div>
+        <div class="ti-sub">
+          <div class="ti" onclick="toggleFolder(this)">📁 1001_홍길동</div>
+          <div id="sub-1001" style="display:none">
+            <div class="tf">📄 이력서.pdf</div><div class="tf">📄 정보처리기사.jpg</div>
+            <div class="tf">📄 건강보험.pdf</div><div class="tf">📄 토익성적표.jpg</div>
+          </div>
+          <div class="ti" onclick="toggleFolder(this)">📁 1002_김철수</div>
+          <div id="sub-1002" style="display:none">
+            <div class="tf">📄 이력서.pdf</div><div class="tf">📄 자격증.jpg</div>
+          </div>
+          <div class="ti">📁 1003_이영희</div>
+          <div class="ti">📁 1004_박지민</div>
+          <div class="ti">📁 1005_최유진</div>
+          <div class="ti">📁 1006_정성훈</div>
+        </div>
+      </div>
+      <div class="side-vbtn">
+        <button class="btn-verify" onclick="doStartVerify()">▶ 검증 시작</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="app-main">
+
+      <!-- Action bar -->
+      <div class="act-bar">
+        <div class="act-left">
+          <span style="font-size:11px;color:var(--tx2)">📂 현재 배치:</span>
+          <span style="font-family:var(--mono);font-size:11px;color:var(--acc)">2026_상반기_공채</span>
+        </div>
+        <div class="act-right">
+          <button class="act-btn" onclick="openModal('m-site')">⚙️ 사이트 계정 설정</button>
+          <button class="act-btn" onclick="doExcelExport()">📥 엑셀 다운로드</button>
+          <button class="act-btn" onclick="doPDFExport()">📄 감사 PDF 다운로드</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="sc sc-all"><div class="sc-lbl">전체</div><div class="sc-num c-all" id="st-all">6</div><div class="sc-sub">이번 배치</div></div>
+        <div class="sc sc-pass"><div class="sc-lbl">검증 완료</div><div class="sc-num c-pass" id="st-pass">3</div><div class="sc-sub">PASS</div></div>
+        <div class="sc sc-fail"><div class="sc-lbl">확인 필요</div><div class="sc-num c-fail" id="st-fail">2</div><div class="sc-sub">FAIL</div></div>
+        <div class="sc sc-manual"><div class="sc-lbl">수동 리뷰</div><div class="sc-num c-manual" id="st-manual">1</div><div class="sc-sub">MANUAL_REVIEW</div></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="app-tabs">
+        <div class="at on" onclick="switchTab('all',this)">전체 보기 (6)</div>
+        <div class="at" onclick="switchTab('fail',this)">확인 필요 (2)</div>
+        <div class="at" onclick="switchTab('manual',this)">수동 리뷰 (1)</div>
+      </div>
+
+      <!-- Table -->
+      <div class="tbl-wrap">
+        <table class="dtbl">
+          <thead>
+            <tr>
+              <th>수험번호</th><th>지원자명</th><th>서류종류</th><th>파일명</th>
+              <th>신뢰도</th><th>확인방법</th><th>검증결과</th><th>액션</th>
+            </tr>
+          </thead>
+          <tbody id="tbl-body"></tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div><!-- /app -->
+
+
+<!-- ══════════════════════════════════════════
+     MODAL: DETAIL
+══════════════════════════════════════════ -->
+<div class="overlay" id="m-detail">
+  <div class="modal-box" style="max-width:980px">
+    <div class="modal-head">
+      <h2>🔍 검증 상세 보기 — <span id="m-detail-title"></span></h2>
+      <button class="modal-close" onclick="closeModal('m-detail')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:12px;color:var(--tx2);margin-bottom:16px;font-family:var(--mono)">📄 <span id="m-detail-file"></span></p>
+      <div class="cap-viewer">
+        <div class="cap-panel">
+          <div class="cap-lbl">ORIGINAL_DOCUMENT</div>
+          <div class="cap-img">📜</div>
+        </div>
+        <div class="cap-panel" id="cap-rpa">
+          <div class="cap-lbl">RPA_CAPTURE — 기관 조회화면</div>
+          <div class="cap-img">🖥️</div>
+        </div>
+      </div>
+      <h3 style="font-size:14px;font-weight:700;margin-bottom:11px">📊 Triple Check 데이터 비교</h3>
+      <div style="overflow:auto;margin-bottom:14px">
+        <table class="cmp-tbl">
+          <thead>
+            <tr>
+              <th>항목</th><th>① 입사지원서 기재내용</th><th>② 증빙서류 OCR 추출</th><th>③ 기관 조회 결과</th>
+            </tr>
+          </thead>
+          <tbody id="cmp-body"></tbody>
+        </table>
+      </div>
+      <div class="ai-box">
+        <div class="ai-head">🤖 Vision LLM AI 종합 검토</div>
+        <p class="ai-txt" id="ai-txt"></p>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-acc" onclick="doApprove()">✅ 승인 (로컬 저장)</button>
+      <button class="btn btn-danger" onclick="doReject()">❌ 반려</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODAL: NOTI
+══════════════════════════════════════════ -->
+<div class="overlay" id="m-noti">
+  <div class="modal-box" style="max-width:640px">
+    <div class="modal-head">
+      <h2>📨 불일치 알림 발송</h2>
+      <button class="modal-close" onclick="closeModal('m-noti')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--tx1);margin-bottom:14px">확인 필요 상태의 지원자를 선택하여 불일치 안내를 발송합니다.</p>
+      <ul class="noti-list" id="noti-list"></ul>
+      <div class="prev-box">
+        <div class="prev-head">📝 알림 내용 미리보기</div>
+        <p class="prev-text">
+          [서류종류]의 [항목]이(가) 입사지원서 기재내용과 일치하지 않습니다.<br>
+          정부24 또는 해당 기관에서 원본을 재발급받아 아래 링크로 제출해주세요.<br>
+          <span class="prev-link">https://verify.hrboolean.ai/resubmit/abc123</span><br>
+          <span style="font-size:11px;color:var(--tx2)">* 링크 유효기간: 72시간</span>
+        </p>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-noti')">취소</button>
+      <button class="btn btn-acc" onclick="doSendNoti()">📧 선택 발송</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODAL: SITE SETTINGS
+══════════════════════════════════════════ -->
+<div class="overlay" id="m-site">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-head">
+      <h2>⚙️ 사이트 계정 설정</h2>
+      <button class="modal-close" onclick="closeModal('m-site')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--tx1);margin-bottom:16px">로컬 RPA 에이전트가 자동 로그인에 사용하는 외부 사이트 계정을 입력하세요.</p>
+      <div id="site-rows"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="closeModal('m-site')">취소</button>
+      <button class="btn btn-acc" onclick="doSaveSite()">💾 저장</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+/* ─── DATA ─── */
+const CREDS = [
+  {email:'test_admin@hrboolean.ai',pw:'Admin123!',role:'ADMIN'},
+  {email:'test_operator@hrboolean.ai',pw:'Oper123!',role:'OPERATOR'},
+];
+
+const ROWS = [
+  {id:1,num:'1001',name:'홍길동',doc:'정보처리기사',file:'1001_정보처리기사.jpg',conf:97,method:'자격번호',status:'PASS',
+   fields:[
+     {f:'성명',v1:'홍길동',v2:'홍길동',v3:'홍길동',ok:true},
+     {f:'자격증명',v1:'정보처리기사',v2:'정보처리기사',v3:'정보처리기사',ok:true},
+     {f:'취득일자',v1:'2023.03.15',v2:'2023.03.15',v3:'2023.03.15',ok:true},
+     {f:'발급기관',v1:'한국산업인력공단',v2:'한국산업인력공단',v3:'한국산업인력공단',ok:true},
+   ],
+   ai:'Q-Net 조회 결과, 자격번호 23-A01-0447이 유효하게 확인되었습니다. 3개 데이터 소스(입사지원서, OCR, 기관 DB) 모두 일치합니다. 최종 판정: PASS.'
+  },
+  {id:2,num:'1002',name:'김철수',doc:'학위증명서',file:'1002_학위증명서.pdf',conf:34,method:'문서확인번호',status:'FAIL',
+   fields:[
+     {f:'성명',v1:'김철수',v2:'김철수',v3:'김철수',ok:true},
+     {f:'학위명',v1:'컴퓨터공학 학사',v2:'컴퓨터공학 학사',v3:'컴퓨터공학 학사',ok:true},
+     {f:'졸업일자',v1:'2020.02.28',v2:'2020.02.28',v3:'2021.08.30',ok:false},
+     {f:'발급번호',v1:'GR-2020-00447',v2:'GR-2020-00447',v3:'미등록',ok:false},
+   ],
+   ai:'⚠️ 졸업일자가 기재(2020.02.28)와 기관 DB(2021.08.30)에서 불일치합니다. 또한 발급번호 GR-2020-00447이 정부24 DB에 등록되어 있지 않습니다. 위조 가능성이 높습니다. 최종 판정: FAIL.'
+  },
+  {id:3,num:'1003',name:'이영희',doc:'건강보험 경력증명서',file:'1003_경력증명서.pdf',conf:62,method:'내용일치',status:'MANUAL_REVIEW',
+   fields:[
+     {f:'성명',v1:'이영희',v2:'이영희',v3:'이영희',ok:true},
+     {f:'가입기간',v1:'2019.03~2022.08',v2:'2019.03~2022.08',v3:'2019.03~2022.08',ok:true},
+     {f:'사업장명',v1:'(주)테크솔루션',v2:'OCR 판독 불가',v3:'—',ok:false},
+     {f:'사업자번호',v1:'123-45-67890',v2:'123-45-67890',v3:'—',ok:true},
+   ],
+   ai:'OCR 신뢰도(62점)가 임계치(70점) 미만입니다. 사업장명 항목의 이미지 품질이 낮아 자동 판독에 실패했습니다. 담당자 수동 확인이 필요합니다.'
+  },
+  {id:4,num:'1004',name:'박지민',doc:'토익 성적표',file:'1004_토익성적표.jpg',conf:91,method:'발급번호',status:'PASS',
+   fields:[
+     {f:'성명',v1:'박지민',v2:'박지민',v3:'박지민',ok:true},
+     {f:'점수',v1:'895점',v2:'895점',v3:'895점',ok:true},
+     {f:'시험일자',v1:'2025.11.10',v2:'2025.11.10',v3:'2025.11.10',ok:true},
+     {f:'성적번호',v1:'TS-2025-0441',v2:'TS-2025-0441',v3:'TS-2025-0441',ok:true},
+   ],
+   ai:'TOEIC 성적번호 TS-2025-0441이 ETS 공식 데이터와 일치합니다. 점수, 시험일자 모두 일치. 최종 판정: PASS.'
+  },
+  {id:5,num:'1005',name:'최유진',doc:'졸업증명서',file:'1005_졸업증명서.pdf',conf:88,method:'문서확인번호',status:'FAIL',
+   fields:[
+     {f:'성명',v1:'최유진',v2:'최유진',v3:'최유진',ok:true},
+     {f:'학교명',v1:'한국대학교',v2:'한국대학교',v3:'한국대학교',ok:true},
+     {f:'졸업일자',v1:'2022.02.25',v2:'2022.02.25',v3:'2022.08.25',ok:false},
+     {f:'학과',v1:'경영학과',v2:'경영학과',v3:'통계학과',ok:false},
+   ],
+   ai:'⚠️ 졸업일자(2022.02 vs 2022.08)와 학과명(경영학과 vs 통계학과) 두 항목에서 불일치가 감지되었습니다. 서류 위조 가능성이 높습니다. 최종 판정: FAIL.'
+  },
+  {id:6,num:'1006',name:'정성훈',doc:'국가기술자격증',file:'1006_자격증.jpg',conf:95,method:'자격번호',status:'PASS',
+   fields:[
+     {f:'성명',v1:'정성훈',v2:'정성훈',v3:'정성훈',ok:true},
+     {f:'자격종목',v1:'전기기사',v2:'전기기사',v3:'전기기사',ok:true},
+     {f:'취득일자',v1:'2021.06.30',v2:'2021.06.30',v3:'2021.06.30',ok:true},
+     {f:'자격번호',v1:'EE-2021-0884',v2:'EE-2021-0884',v3:'EE-2021-0884',ok:true},
+   ],
+   ai:'전기기사 자격번호 EE-2021-0884가 한국산업인력공단 Q-Net DB에서 유효하게 확인되었습니다. 최종 판정: PASS.'
+  },
+];
+
+const SITES = [
+  {id:'gov24',name:'정부24',ico:'🏛️'},
+  {id:'qnet',name:'Q-Net',ico:'🔧'},
+  {id:'nhis',name:'국민건강보험',ico:'🏥'},
+  {id:'opic',name:'OPIc',ico:'🗣️'},
+  {id:'toeic',name:'TOEIC',ico:'📝'},
+];
+
+let G = {user:null,tab:'all',checkedNoti:new Set()};
+
+/* ─── PAGE NAV ─── */
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+/* ─── LOGIN ─── */
+function doLogin(){
+  const email=document.getElementById('l-email').value.trim();
+  const pw=document.getElementById('l-pw').value;
+  const err=document.getElementById('l-err');
+  const u=CREDS.find(c=>c.email===email&&c.pw===pw);
+  if(!u){err.classList.add('on');return;}
+  err.classList.remove('on');
+  G.user=u;
+  document.getElementById('u-email').textContent=u.email.split('@')[0];
+  document.getElementById('u-role').textContent=u.role;
+  renderTable('all');
+  goPage('pg-app');
+  toast('👋 환영합니다, '+u.email.split('@')[0]+'님!');
+}
+document.getElementById('l-pw').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('l-email').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+function doLogout(){G.user=null;goPage('pg-landing');toast('로그아웃 되었습니다.');}
+
+/* ─── SIDEBAR ─── */
+function doScan(){
+  const st=document.getElementById('scan-st');
+  st.textContent='스캔 중...';
+  st.style.color='var(--tx2)';
+  setTimeout(()=>{
+    st.textContent='✅ 스캔 완료 — 6명 발견';
+    st.style.color='var(--acc)';
+    toast('📂 6명의 지원자 서류 발견');
+  },900);
+}
+
+function doStartVerify(){toast('🚀 검증이 시작되었습니다. 잠시 후 결과가 업데이트됩니다.');}
+
+let folderOpen={};
+function toggleFolder(el){
+  const name=el.textContent.trim();
+  const key=name.split('_')[0];
+  const sub=document.getElementById('sub-'+key);
+  if(!sub)return;
+  folderOpen[key]=!folderOpen[key];
+  sub.style.display=folderOpen[key]?'block':'none';
+  document.querySelectorAll('.ti').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+}
+
+/* ─── TABLE ─── */
+function switchTab(tab,el){
+  G.tab=tab;
+  document.querySelectorAll('.at').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  renderTable(tab);
+}
+
+function renderTable(tab){
+  let data=ROWS;
+  if(tab==='fail') data=ROWS.filter(r=>r.status==='FAIL');
+  if(tab==='manual') data=ROWS.filter(r=>r.status==='MANUAL_REVIEW');
+
+  const confColor=c=>c>=70?'var(--acc)':c>=50?'var(--yel)':'var(--red)';
+  const badgeCls=s=>s==='PASS'?'b-pass':s==='FAIL'?'b-fail':'b-manual';
+  const badgeTxt=s=>s==='PASS'?'PASS':s==='FAIL'?'FAIL':'REVIEW';
+
+  document.getElementById('tbl-body').innerHTML=data.map(r=>`
+    <tr>
+      <td class="code">${r.num}</td>
+      <td class="nm">${r.name}</td>
+      <td>${r.doc}</td>
+      <td class="code" style="color:var(--tx2)">${r.file}</td>
+      <td>
+        <div class="conf-wrap">
+          <div class="conf-bg"><div class="conf-fill" style="width:${r.conf}%;background:${confColor(r.conf)}"></div></div>
+          <span class="conf-n">${r.conf}%</span>
+        </div>
+      </td>
+      <td class="code">${r.method}</td>
+      <td><span class="badge ${badgeCls(r.status)}">${badgeTxt(r.status)}</span></td>
+      <td><button class="btn-view" onclick="openDetail(${r.id})">상세 보기</button></td>
+    </tr>`).join('');
+}
+
+/* ─── DETAIL MODAL ─── */
+function openDetail(id){
+  const r=ROWS.find(x=>x.id===id);
+  G.cur=r;
+  document.getElementById('m-detail-title').textContent=`${r.num} — ${r.name} (${r.doc})`;
+  document.getElementById('m-detail-file').textContent=r.file;
+  
+  // RPA panel color hint
+  document.getElementById('cap-rpa').style.background=
+    r.status==='PASS'?'rgba(0,212,170,.04)':'rgba(255,77,109,.04)';
+
+  // Compare table
+  document.getElementById('cmp-body').innerHTML=r.fields.map(f=>`
+    <tr>
+      <td class="fn">${f.f}</td>
+      <td class="v">${f.v1}</td>
+      <td class="v ${f.ok?'cell-ok':'cell-ng'}">${f.v2}</td>
+      <td class="v ${f.ok?'cell-ok':'cell-ng'}">${f.v3}${f.ok?' ✓':' ⚠️'}</td>
+    </tr>`).join('');
+
+  document.getElementById('ai-txt').textContent=r.ai;
+  openModal('m-detail');
+}
+
+function doApprove(){toast('✅ 승인 완료. 로컬에 저장되었습니다.');closeModal('m-detail');}
+function doReject(){
+  const reason=prompt('반려 사유를 입력하세요:');
+  if(reason===null)return;
+  toast('❌ 반려 처리 완료. 사유: '+(reason||'(미입력)'));
+  closeModal('m-detail');
+}
+
+/* ─── NOTI MODAL ─── */
+function openNotiSetup(){
+  const targets=ROWS.filter(r=>r.status==='FAIL'||r.status==='MANUAL_REVIEW');
+  G.checkedNoti.clear();
+  document.getElementById('noti-list').innerHTML=targets.map(r=>`
+    <li class="noti-item" onclick="toggleNoti(${r.id},this)">
+      <div class="ncheck" id="nc-${r.id}"></div>
+      <div class="ninfo">
+        <div class="nname">${r.name} <span style="font-family:var(--mono);font-size:10px;color:var(--tx2)">${r.num}</span></div>
+        <div class="ndetail">${r.doc} · ${r.status==='FAIL'?'불일치 감지':'수동 확인 필요'}</div>
+      </div>
+      <span class="badge ${r.status==='FAIL'?'b-fail':'b-manual'}">${r.status==='FAIL'?'FAIL':'REVIEW'}</span>
+    </li>`).join('');
+}
+
+function toggleNoti(id,el){
+  const ch=document.getElementById('nc-'+id);
+  if(G.checkedNoti.has(id)){
+    G.checkedNoti.delete(id);
+    ch.classList.remove('on');ch.textContent='';
+    el.style.borderColor='';
+  } else {
+    G.checkedNoti.add(id);
+    ch.classList.add('on');ch.textContent='✓';
+    el.style.borderColor='rgba(0,212,170,.3)';
+  }
+}
+
+function doSendNoti(){
+  if(G.checkedNoti.size===0){toast('⚠️ 발송할 대상을 선택하세요.');return;}
+  toast(`📧 ${G.checkedNoti.size}건 알림 발송 완료`);
+  closeModal('m-noti');
+}
+
+/* ─── SITE SETTINGS ─── */
+function buildSiteRows(){
+  document.getElementById('site-rows').innerHTML=SITES.map(s=>`
+    <div class="site-row">
+      <div class="site-nm">${s.ico} ${s.name}</div>
+      <input class="site-inp" type="text" placeholder="아이디" id="si-${s.id}">
+      <input class="site-inp" type="password" placeholder="비밀번호" id="sp-${s.id}">
+    </div>`).join('');
+}
+function doSaveSite(){toast('⚙️ 사이트 계정이 저장되었습니다.');closeModal('m-site');}
+
+/* ─── EXPORTS ─── */
+function doExcelExport(){toast('📥 엑셀 파일이 생성되었습니다.');}
+function doPDFExport(){toast('📄 감사 리포트 PDF가 생성되었습니다.');}
+
+/* ─── MODAL HELPERS ─── */
+function openModal(id){
+  if(id==='m-noti') openNotiSetup();
+  if(id==='m-site') buildSiteRows();
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+// click outside to close
+document.querySelectorAll('.overlay').forEach(o=>{
+  o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open');});
+});
+
+/* ─── TOAST ─── */
+function toast(msg){
+  const wrap=document.getElementById('toast-wrap');
+  const el=document.createElement('div');
+  el.className='toast';
+  el.textContent=msg;
+  wrap.appendChild(el);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('show')));
+  setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),350);},3000);
+}
+
+/* ─── LANDING INTERACTIVES ─── */
+// 시뮬레이터 구동 스크립트
+function runSimulation() {
+  const btn = document.getElementById('sim-btn');
+  btn.disabled = true;
+  btn.innerText = "진행 중...";
+
+  // 초기화
+  document.querySelectorAll('.sim-step').forEach(el => {
+    el.classList.remove('active', 'processing');
+    el.style.borderColor = 'var(--bd2)';
+  });
+  document.getElementById('content-1').innerText = "대기 중...";
+  document.getElementById('content-2').innerText = "대기 중...";
+  document.getElementById('content-3').innerText = "대기 중...";
+
+  // Step 1
+  const s1 = document.getElementById('step-1');
+  s1.classList.add('active', 'processing');
+  document.getElementById('content-1').innerText = "지원자 [홍길동] 정보처리기사 스캔본 분석 중...";
+  
+  setTimeout(() => {
+    s1.classList.remove('processing');
+    document.getElementById('content-1').innerHTML = "✅ 추출 완료<br>성명: 홍길동 | 자격증명: 정보처리기사 | 취득일: 2023.03.15 | 자격번호: 23-A01-0447";
+    
+    // Step 2
+    const s2 = document.getElementById('step-2');
+    s2.classList.add('active', 'processing');
+    document.getElementById('content-2').innerText = "한국산업인력공단(Q-Net) 서버 API 터널링 및 자격번호 조회 중...";
+
+    setTimeout(() => {
+      s2.classList.remove('processing');
+      document.getElementById('content-2').innerHTML = "✅ DB 응답 수신 완료<br>응답 데이터: [홍길동, 정보처리기사, 2023-03-15, 유효함]";
+      
+      // Step 3
+      const s3 = document.getElementById('step-3');
+      s3.classList.add('active', 'processing');
+      document.getElementById('content-3').innerText = "입사지원서 기재 내용 ↔ OCR 추출 ↔ 기관 DB 크로스 체크 중...";
+
+      setTimeout(() => {
+        s3.classList.remove('processing');
+        s3.style.borderColor = 'var(--acc)';
+        document.getElementById('content-3').innerHTML = "<span style='color:var(--acc); font-weight:bold;'>[PASS] 일치율 100%</span><br>모든 검증이 완료되었습니다. 감사용 증빙 로그가 시스템에 안전하게 기록되었습니다.";
+        btn.disabled = false;
+        btn.innerText = "↺ 다시 시뮬레이션";
+      }, 1500);
+
+    }, 1500);
+
+  }, 1500);
+}
+
+// CTA
+function submitCTA(){
+  const inp=document.getElementById('cta-email');
+  if(!inp.value.includes('@')){inp.style.borderColor='var(--red)';return;}
+  inp.style.borderColor='';inp.value='';
+  inp.placeholder='담당자가 24시간 내 연락드립니다 ✅';
+  toast('✅ 데모 신청이 완료되었습니다!');
+}
+
+/* ─── SCROLL REVEAL ─── */
+const rvObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
+
+/* ─── INIT ─── */
+renderTable('all');
+</script>
+</body>
+</html>

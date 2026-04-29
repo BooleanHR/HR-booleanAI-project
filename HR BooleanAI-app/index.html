@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR BooleanAI - 진위확인 솔루션</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 80vw;
+      max-width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(79,70,229,0.2) 0%, rgba(15,23,42,0) 70%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #4f46e5, #7c3aed);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      background: rgba(99, 102, 241, 0.08);
+      transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(99, 102, 241, 0.18);
+      border-color: rgba(99, 102, 241, 0.6);
+    }
+
+    /* Demo Section */
+    .demo-browser {
+      border-radius: 16px;
+      border: 1px solid rgba(51, 65, 85, 0.5);
+      background: rgba(30, 41, 59, 0.3);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 25px 50px -12px rgba(0,0,0,0.5),
+        0 0 80px -20px rgba(99,102,241,0.15);
+      overflow: hidden;
+    }
+    .demo-browser-bar {
+      background: rgba(30, 41, 59, 0.8);
+      border-bottom: 1px solid rgba(51, 65, 85, 0.6);
+    }
+    .demo-iframe {
+      width: 100%;
+      height: 720px;
+      border: none;
+      background: #fff;
+    }
+
+    /* Scroll animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="relative overflow-x-hidden antialiased">
+  
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-slate-900/80 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🛡️</span>
+        <span class="text-xl font-bold tracking-tight">HR BooleanAI</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#live-demo" class="btn-secondary text-indigo-300 px-5 py-2 rounded-full font-medium text-sm inline-flex items-center gap-2">
+          라이브 데모 ↓
+        </a>
+        <a href="app.html" target="_blank" class="btn-primary text-white px-6 py-2.5 rounded-full font-medium inline-flex items-center gap-2 text-sm">
+          새 창에서 열기
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-32 pb-16 px-6 relative">
+    <div class="hero-glow"></div>
+    <div class="max-w-5xl mx-auto text-center mt-16">
+      <div class="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-sm font-medium">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+        </span>
+        차세대 서류 검증 자동화 솔루션
+      </div>
+      <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
+        서류 검증 지옥에서 벗어나세요.<br />
+        <span class="gradient-text">3초 만에 진위 여부 판별</span>
+      </h1>
+      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+        수작업 대조, 기관 사이트 캡처, 데이터 입력... 반복적이고 소모적인 검증 업무는 이제 <strong class="text-slate-200 font-semibold">AI와 로컬 RPA</strong>에 맡기세요. 인사담당자는 오직 <strong class="text-slate-200 font-semibold">'핵심 인재 확보'</strong>에만 집중하면 됩니다.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#live-demo" class="btn-primary text-white px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 w-full sm:w-auto justify-center">
+          지금 바로 체험하기 <i data-lucide="arrow-down" class="w-5 h-5"></i>
+        </a>
+        <a href="app.html" target="_blank" class="btn-secondary text-indigo-300 px-8 py-4 rounded-full font-semibold text-lg inline-flex items-center gap-2 w-full sm:w-auto justify-center">
+          새 창에서 열기 <i data-lucide="external-link" class="w-5 h-5"></i>
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="mt-16 float-anim">
+        <a href="#live-demo" class="text-slate-500 hover:text-indigo-400 transition-colors inline-flex flex-col items-center gap-1 text-xs">
+          <span>아래에서 직접 체험해보세요</span>
+          <i data-lucide="chevrons-down" class="w-5 h-5"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Demo Section (Embedded iframe) -->
+  <section id="live-demo" class="px-4 md:px-6 pb-24 pt-8">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-sm font-medium">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          인터랙티브 라이브 데모
+        </div>
+        <h2 class="text-3xl md:text-4xl font-bold mb-3">직접 만져보세요</h2>
+        <p class="text-slate-400 text-lg max-w-xl mx-auto">로그인부터 서류 검증, 결과 확인까지 — 실제 대시보드를 아래에서 바로 체험할 수 있습니다.</p>
+      </div>
+
+      <!-- Credential Hint -->
+      <div class="max-w-lg mx-auto mb-6 rounded-xl border border-slate-700 bg-slate-800/50 p-4 text-sm backdrop-blur-sm">
+        <div class="flex items-center gap-2 text-slate-300 font-semibold mb-2">
+          <i data-lucide="key-round" class="w-4 h-4 text-indigo-400"></i>
+          테스트 계정 정보
+        </div>
+        <div class="grid grid-cols-2 gap-3 text-xs text-slate-400">
+          <div>
+            <span class="text-slate-500">관리자:</span><br />
+            <code class="text-indigo-300">test_admin@hrboolean.ai</code><br />
+            <code class="text-slate-300">Admin123!</code>
+          </div>
+          <div>
+            <span class="text-slate-500">운영자:</span><br />
+            <code class="text-indigo-300">test_operator@hrboolean.ai</code><br />
+            <code class="text-slate-300">Oper123!</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Embedded Browser Frame -->
+      <div class="demo-browser">
+        <!-- Browser Chrome Bar -->
+        <div class="demo-browser-bar flex items-center px-4 h-11 gap-2">
+          <div class="flex items-center gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+          </div>
+          <div class="ml-3 flex-1 max-w-md">
+            <div class="h-7 bg-slate-900/80 rounded-md text-xs text-slate-500 flex items-center px-3 border border-slate-700/60 gap-1.5">
+              <i data-lucide="lock" class="w-3 h-3 text-emerald-500"></i>
+              hr-booleanai.local/dashboard
+            </div>
+          </div>
+          <a href="app.html" target="_blank" class="ml-auto text-slate-500 hover:text-indigo-400 transition-colors" title="새 창에서 열기">
+            <i data-lucide="maximize-2" class="w-4 h-4"></i>
+          </a>
+        </div>
+        
+        <!-- Actual Live App -->
+        <iframe src="app.html" class="demo-iframe" title="HR BooleanAI 대시보드 라이브 데모" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
