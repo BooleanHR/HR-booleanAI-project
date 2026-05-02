@@ -144,3 +144,39 @@
     ▼
 [로그인 화면]
 ```
+
+---
+
+## 8️⃣ 시나리오 G — 랜딩페이지 검증 흐름 시각화 (v0.9 추가)
+
+> **대상**: 랜딩페이지 방문자 (잠재 고객)  
+> **목적**: 제품의 6단계 자동화 파이프라인을 직관적으로 시연
+
+### 검증 흐름 인포그래픽 (6단계)
+
+```
+STEP 01  서류 수집 · 변환 · 분류
+  ↓      폴더 스캔 / 파일 형식 변환(DOCX→PDF, HEIC→JPG) / 이미지 회전 보정
+STEP 02  Gemini Vision OCR + 자동 명명
+  ↓      핵심 항목 추출 / 서류 종류 분류 / 파일명 자동 생성
+STEP 03  입사지원서 vs OCR 값 비교
+  ↓      Triple Check Layer 1 — 지원자 기재 내용과 OCR 추출값 교차 검증
+STEP 04  RPA 5대 기관 DB 자동 조회
+  ↓      정부24 · Q-Net · 건강보험 · TOEIC · OPIc 병렬 캡처
+STEP 05  Vision LLM 크로스체크
+  ↓      원본 서류 + RPA 캡처 + 지원서 내용 종합 분석
+STEP 06  판정 · 증적 · 리포트 자동 생성
+         PASS/FAIL/REVIEW + SHA-256 감사 증적 5년 보존 + PDF/Excel
+```
+
+### RPA 연동 기관 사이트 (6개 탭)
+
+| 탭 | 기관 | 용도 |
+|---|------|------|
+| 🏛️ 정부24 | www.gov.kr | 인터넷 발급문서 진위확인 |
+| 🔧 Q-Net | www.q-net.or.kr | 자격증 진위확인 |
+| 📄 Q-Net | www.q-net.or.kr | 확인서 진위확인 |
+| 📝 TOEIC | www.ybmnet.co.kr | 성적 진위확인 |
+| 🗣️ OPIc | www.opic.or.kr | 인증서 진위확인 |
+| 🏥 건강보험 | si4n.nhis.or.kr | 자격득실확인서 진위확인 |
+
