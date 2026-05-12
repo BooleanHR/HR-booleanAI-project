@@ -10,7 +10,7 @@ source_task_id: D-004
 ## :dart: Summary
 - **기능명:** [FR-030] API 응답 스냅샷 캡처 유틸리티
 - **Epic:** Mock/External
-- **목적:** 외부 API 응답 JSON 원문과 캡처 타임스탬프를 구조화하여 Audit Trail의 `agency_response_snapshot` 필드에 저장할 수 있도록 캡처 유틸리티를 구현한다. 이는 v1.1 병렬 캡처 MVP 대안(ADR-008)의 핵심 구현이다.
+- **목적:** 외부 API 응답 JSON 원문과 캡처 타임스탬프를 구조화하여 Audit Trail의 `agency_response_snapshot` 필드에 저장할 수 있도록 캡처 유틸리티를 구현한다. 이는 v1.1 병렬 캡처 MVP 대안(ADR-008)의 핵심 구현이다. v1.3: agency_config.json 기반 동적 URL/셀렉터 로드. 4단계 폴백 전략 적용.
 - **설계 원칙:** SRS §3.13 REQ-FUNC-024 — API 응답 JSON 스냅샷 저장. §3.5 ADR-008.
 
 ## :white_check_mark: Task Breakdown (실행 계획)
@@ -37,4 +37,4 @@ source_task_id: D-004
 - **Blocks:** J-001 (Audit Trail 자동 생성)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST D-004 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST D-004 | SRS: v1.3*

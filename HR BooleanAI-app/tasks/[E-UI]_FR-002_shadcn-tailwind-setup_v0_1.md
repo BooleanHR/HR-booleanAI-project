@@ -17,15 +17,15 @@ source_task_id: A-002
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 C-TEC-004`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 C-TEC-004`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-004:** UI는 Tailwind CSS + shadcn/ui만 사용. CSS 파일 직접 작성 금지.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.4 스택 선택 이유`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.4 스택 선택 이유`](../SRS-HR-AI-Verification-v1.3.md)
   - shadcn/ui 선택 이유: 복사 붙여넣기 방식; 커스텀 용이. 제한: 초기 설치 설정 필요.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.10 컴포넌트 책임 정의`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.10 컴포넌트 책임 정의`](../SRS-HR-AI-Verification-v1.3.md)
   - Next.js Pages 역할: 서류 업로드 UI, 대시보드, 승인/반려 화면, 알림 선택 발송 UI — 모두 shadcn/ui 컴포넌트 사용
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.13 REQ-FUNC-030`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.13 REQ-FUNC-030`](../SRS-HR-AI-Verification-v1.3.md)
   - 담당자 대시보드에 '승인'/'반려' 버튼 표시 → Button, Card, Table, Dialog 등 사용 확정
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `npx shadcn@latest init` 실행하여 shadcn/ui 초기 설정
@@ -106,4 +106,4 @@ source_task_id: A-002
   - UI-002 (로그인 페이지 UI)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST A-002 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST A-002 | SRS: v1.3*

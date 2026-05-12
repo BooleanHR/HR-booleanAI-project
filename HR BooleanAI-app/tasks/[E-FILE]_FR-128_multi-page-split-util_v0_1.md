@@ -15,7 +15,7 @@ source_task_id: F-009
 - **복잡도:** M
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-085`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-085`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `pdf-lib`을 사용해 원본 PDF 로드

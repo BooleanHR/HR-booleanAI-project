@@ -10,13 +10,13 @@ source_task_id: G-004
 ## :dart: Summary
 - **기능명:** [FR-050] OCR confidence threshold check
 - **Epic:** OCR Engine
-- **목적:** When OCR confidence < 70 (ADR-005 PoC threshold), creates VerificationJob with status=MANUAL_REVIEW, final_result='confirmed needed'.
+- **목적:** When OCR confidence < 70 (ADR-005 PoC threshold), creates VerificationJob with status=MANUAL_REVIEW, final_result='confirmed needed'. v1.3: doc_category별 전용 프롬프트 분기 및 doc_source 자동 판별(webminwon/certpia/gov24/icerts) 적용.
 - **설계 원칙:** SRS REQ-FUNC-004, ADR-005
 - **복잡도:** M
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-004`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic G`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-004`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic G`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: G-004
 - **Blocks:** none
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST G-004 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST G-004 | SRS: v1.3*

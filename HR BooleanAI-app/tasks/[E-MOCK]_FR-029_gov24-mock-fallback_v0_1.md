@@ -10,7 +10,7 @@ source_task_id: D-003
 ## :dart: Summary
 - **기능명:** [FR-029] 정부24 API 타임아웃 시 Mock 폴백 함수
 - **Epic:** Mock/External
-- **목적:** 정부24 API 호출이 10초 타임아웃되거나 네트워크 에러 발생 시 자동으로 Mock 응답을 반환하는 폴백 함수를 구현한다.
+- **목적:** 정부24 API 호출이 10초 타임아웃되거나 네트워크 에러 발생 시 자동으로 Mock 응답을 반환하는 폴백 함수를 구현한다. v1.3: agency_config.json 기반 동적 URL/셀렉터 로드. 4단계 폴백 전략 적용.
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `src/lib/mock-responses.ts`에 `mockGov24Response()` 함수 구현
@@ -35,4 +35,4 @@ source_task_id: D-003
 - **Blocks:** I-002 (Triple Check Layer 2)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST D-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST D-003 | SRS: v1.3*

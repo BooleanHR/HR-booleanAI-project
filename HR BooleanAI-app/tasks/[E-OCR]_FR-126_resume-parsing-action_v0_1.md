@@ -10,12 +10,12 @@ source_task_id: G-002
 ## :dart: Summary
 - **기능명:** [FR-126] '1. 입사지원서' 전용 파싱 Action (지원자 기재 스펙 추출)
 - **Epic:** E-OCR
-- **목적:** 지원자의 입사지원서(이력서) 파일(PDF 등)에서 이름, 수험번호, 자격증 내역, 어학점수 내역 등을 JSON 형태로 추출하여 검증의 '기준점(Ground Truth Input)'으로 삼는다.
+- **목적:** 지원자의 입사지원서(이력서) 파일(PDF 등)에서 이름, 수험번호, 자격증 내역, 어학점수 내역 등을 JSON 형태로 추출하여 검증의 '기준점(Ground Truth Input)'으로 삼는다. v1.3: doc_category별 전용 프롬프트 분기 및 doc_source 자동 판별(webminwon/certpia/gov24/icerts) 적용.
 - **설계 원칙:** SRS REQ-FUNC-010 (v1.3)
 - **복잡도:** H
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-010`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-010`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Gemini Vision API `generateObject()` 프롬프트 설계 (표/텍스트에서 핵심 스펙 추출)

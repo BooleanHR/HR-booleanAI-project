@@ -16,9 +16,9 @@ source_task_id: B-002
 - **설계 원칙:** SRS §3.8 Prisma Schema (L518 ~ 533) User 모델 정의를 그대로 따른다.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — User 모델`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.14 REQ-NF-023`](../SRS-HR-AI-Verification-v1.1.md) — 개인정보 마스킹 원칙
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic B`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — User 모델`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.14 REQ-NF-023`](../SRS-HR-AI-Verification-v1.3.md) — 개인정보 마스킹 원칙
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic B`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `prisma/schema.prisma`에 User 모델 추가
@@ -72,4 +72,4 @@ source_task_id: B-002
 - **Blocks:** B-003 (Batch 모델), B-009 (Report 모델)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-002 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-002 | SRS: v1.3*

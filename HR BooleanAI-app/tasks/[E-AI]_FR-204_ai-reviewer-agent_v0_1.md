@@ -1,0 +1,7 @@
+---\nsource_task_id: RX-005
+title: "[Feature] FR-204: AI Reviewer Agent — Gemini Vision LLM 자동 검토"
+labels: 'feature, ai-reviewer, priority:critical'\n---\n\n## :dart: Summary\n- **기능명:** [FR-204] AI Reviewer Agent — Gemini Vision LLM 자동 검토\n- **Epic:** E-AI\n- **목적:** `lib/ai/reviewer-agent.ts` — runAIReviewer() 구현. 원본 서류 이미지 + RPA 캡처 이미지 + OCR 결과를 Gemini 1.5 Pro Vision에 멀티모달 전달. APPROVE/REJECT/ESCALATE 결정 + 한국어 자연어 설명 생성.
+- **판정 기준:**
+  - APPROVE: 3소스 일치 + 신뢰도 ≥90% + 이미지 정상
+  - REJECT: 핵심 항목 1개 이상 불일치 + 근거 명확
+  - ESCALATE: OCR <70%, 캡처 실패(mock), 판단 불충분\n- **복잡도:** H\n\n## :link: References (Spec & Context)\n- SRS 문서: SRS-HR-AI-Verification-v1.3.md\n- TASK-LIST: TASK-LIST-HR-AI-Verification-v1_2.md\n\n## :white_check_mark: Task Breakdown (실행 계획)\n- [ ] **TB-1:** AIReviewInput / AIReviewOutput 타입 정의\n- [ ] **TB-2:** Gemini 1.5 Pro Vision 멀티모달 프롬프트 (한국어)\n- [ ] **TB-3:** generateObject() + zod 스키마 검증\n- [ ] **TB-4:** VerificationJob 완료 후 자동 runAIReviewer() 파이프라인 연결\n- [ ] **TB-5:** ai_review_decision, ai_review_summary 컬럼 DB 저장\n\n## :test_tube: Acceptance Criteria (BDD/GWT)\n- 홍길동 정보처리기사 → APPROVE (신뢰도≥95%). 김철수 학위 불일치 → REJECT. 처리시간 ≤10초\n\n## :gear: Technical & Non-Functional Constraints\n- Next.js App Router Server Action / Route Handler 패턴 (필요시)\n\n## :checkered_flag: Definition of Done (DoD)\n- [ ] 핵심 기능 구현 완료\n- [ ] AC 시나리오 통과\n- [ ] npm run build 에러 0건\n\n## :construction: Dependencies & Blockers\n- **Depends on:** RX-002, I-001~005, P-001\n- **Blocks:** RX-006\n\n---\n*Document Version: v0.1 (초안) | Source: TASK-LIST RX-005 | SRS: v1.3*\n

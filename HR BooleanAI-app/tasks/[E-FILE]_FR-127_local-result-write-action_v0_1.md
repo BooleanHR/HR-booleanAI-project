@@ -15,7 +15,7 @@ source_task_id: F-008
 - **복잡도:** L
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-025`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-025`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Node.js `fs` 모듈을 통한 지원자 하위 `5. 진위확인결과` 폴더 존재 여부 확인 및 생성 (`fs.mkdirSync`)

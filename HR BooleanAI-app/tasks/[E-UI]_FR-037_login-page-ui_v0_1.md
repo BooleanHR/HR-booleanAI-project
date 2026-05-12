@@ -33,4 +33,4 @@ source_task_id: UI-002
 - **Blocks:** UI-010 (서류 업로드 페이지)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST UI-002 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST UI-002 | SRS: v1.3*

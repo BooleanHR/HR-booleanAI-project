@@ -16,9 +16,9 @@ source_task_id: B-004
 - **설계 원칙:** SRS §3.8 (L551 ~ 565). Batch → Applicant 1:N 관계.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — Applicant`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — Applicant`](../SRS-HR-AI-Verification-v1.3.md)
   - exam_number: 수험번호 (v1.1 신규). 공공기관 필수, 사기업 선택.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ASM-07`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ASM-07`](../SRS-HR-AI-Verification-v1.3.md)
   - 공공기관은 수험번호, 사기업은 지원자 이름을 주 식별자로 사용.
 
 ## :white_check_mark: Task Breakdown (실행 계획)
@@ -58,4 +58,4 @@ source_task_id: B-004
 - **Blocks:** B-005 (Document 모델), B-008 (Notification 모델)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-004 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-004 | SRS: v1.3*

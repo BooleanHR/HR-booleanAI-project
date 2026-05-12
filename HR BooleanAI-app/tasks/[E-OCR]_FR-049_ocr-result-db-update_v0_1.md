@@ -10,13 +10,13 @@ source_task_id: G-003
 ## :dart: Summary
 - **기능명:** [FR-049] OCR result DB update
 - **Epic:** OCR Engine
-- **목적:** Updates DOCUMENT table fields: ocr_extracted_json, ocr_confidence_score, doc_category via Prisma update.
+- **목적:** Updates DOCUMENT table fields: ocr_extracted_json, ocr_confidence_score, doc_category via Prisma update. v1.3: doc_category별 전용 프롬프트 분기 및 doc_source 자동 판별(webminwon/certpia/gov24/icerts) 적용.
 - **설계 원칙:** SRS REQ-FUNC-003, Seq-01
 - **복잡도:** L
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-003`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic G`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-003`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic G`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: G-003
 - **Blocks:** G-004, H-003, I-001
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST G-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST G-003 | SRS: v1.3*

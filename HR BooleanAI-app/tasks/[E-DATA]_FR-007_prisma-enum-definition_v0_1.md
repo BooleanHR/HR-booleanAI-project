@@ -17,11 +17,11 @@ source_task_id: B-001
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema`](../SRS-HR-AI-Verification-v1.3.md)
   - Enum 정의 (L673 ~ 688): UserRole, UserStatus, BatchStatus, DocType, CheckLayer, ReportType, JobStatus
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 ERD`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 ERD`](../SRS-HR-AI-Verification-v1.3.md)
   - 각 모델에서 참조하는 Enum 관계
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic B`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic B`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `prisma/schema.prisma`에 UserRole enum 정의
@@ -102,4 +102,4 @@ source_task_id: B-001
   - C-001 (TypeScript 공통 타입 정의 — Enum 기반)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-001 | SRS: v1.3*

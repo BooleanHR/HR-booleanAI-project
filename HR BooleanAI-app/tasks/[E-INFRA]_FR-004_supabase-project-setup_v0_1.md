@@ -17,21 +17,21 @@ source_task_id: A-004
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-003:** Prisma + Supabase PostgreSQL (배포)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.2 C-TEC-007`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.2 C-TEC-007`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-007:** 배포 및 인프라는 Vercel 단일화. Vercel 환경변수 패널로 시크릿 관리.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.4 스택 선택 이유`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.4 스택 선택 이유`](../SRS-HR-AI-Verification-v1.3.md)
   - Supabase 선택 이유: 무료 플랜 충분 (DB 500MB, Storage 1GB); RLS로 RBAC 구현 용이. 제한: 무료 플랜 DB 500MB.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.6 시스템 전체 흐름`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.6 시스템 전체 흐름`](../SRS-HR-AI-Verification-v1.3.md)
   - Supabase 구성: PostgreSQL (Prisma) + Storage (원본+변환 파일) + Auth (세션/JWT)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.14 REQ-NF-020 ~ 026`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.14 REQ-NF-020 ~ 026`](../SRS-HR-AI-Verification-v1.3.md)
   - 인증: Supabase Auth (이메일/패스워드 or Google OAuth)
   - 저장 암호화: Supabase Storage AES-256
   - RBAC: Supabase RLS + Middleware
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.16 예상 월 운영 비용`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.16 예상 월 운영 비용`](../SRS-HR-AI-Verification-v1.3.md)
   - Supabase: Free (500MB DB, 1GB Storage) → $0/월
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Supabase 대시보드에서 신규 프로젝트 생성
@@ -167,4 +167,4 @@ source_task_id: A-004
   - V-001 (배포 시 PostgreSQL 전환 — Connection string 필요)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST A-004 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST A-004 | SRS: v1.3*

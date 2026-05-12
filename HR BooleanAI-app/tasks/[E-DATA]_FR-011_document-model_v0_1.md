@@ -16,11 +16,11 @@ source_task_id: B-005
 - **설계 원칙:** SRS §3.8 (L567 ~ 589). JSON 필드는 String(Text)으로 대체하여 SQLite 호환 (C-TEC-003).
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — Document`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — Document`](../SRS-HR-AI-Verification-v1.3.md)
   - v1.1 신규 필드 7개: docCategory, originalFilename, normalizedFilename, originalFileFormat, convertedFilePath, rotationApplied, rotationDegrees
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.3.md)
   - JSON 타입은 Text로 대체하여 SQLite/PostgreSQL 호환
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.13 REQ-FUNC-081 ~ 082, 090 ~ 091`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.13 REQ-FUNC-081 ~ 082, 090 ~ 091`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Document 모델 추가
@@ -72,4 +72,4 @@ source_task_id: B-005
 - **Blocks:** B-006 (VerificationJob 모델)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-005 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-005 | SRS: v1.3*

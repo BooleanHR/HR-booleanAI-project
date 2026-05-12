@@ -17,19 +17,19 @@ source_task_id: A-006
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.2 C-TEC-005`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.2 C-TEC-005`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-005:** AI/LLM 호출은 **Vercel AI SDK** 사용. 별도 Python 서버 금지.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.2 C-TEC-006`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.2 C-TEC-006`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-006:** LLM은 **Google Gemini API** 기본 사용. `GEMINI_API_KEY` 환경변수.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.3 C-TEC-008`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.3 C-TEC-008`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-008:** 엑셀 생성은 **exceljs** 사용 (v1.1).
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.3 C-TEC-009`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.3 C-TEC-009`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-009:** 이미지 변환·보정은 **sharp** 사용 (v1.1).
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.3 C-TEC-010`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.3 C-TEC-010`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-010:** DOCX→PDF 변환은 **libreoffice-convert** 또는 대안.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.4 스택 선택 이유`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.4 스택 선택 이유`](../SRS-HR-AI-Verification-v1.3.md)
   - pdf-lib: 순수 JS, Vercel 호환. sharp: 고성능 이미지 처리.
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Vercel AI SDK + Gemini Provider 설치
@@ -124,4 +124,4 @@ source_task_id: A-006
   - F-004 (DOCX 변환 — libreoffice-convert 필요)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST A-006 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST A-006 | SRS: v1.3*

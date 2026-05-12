@@ -16,9 +16,9 @@ source_task_id: B-006
 - **설계 원칙:** SRS §3.8 (L591 ~ 614). Document → VerificationJob 1:N 관계.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — VerificationJob`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — VerificationJob`](../SRS-HR-AI-Verification-v1.3.md)
   - v1.1 신규: verificationMethod(문서확인번호/자격번호/내용일치), finalResult(완료/확인필요)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.13 REQ-FUNC-015`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.13 REQ-FUNC-015`](../SRS-HR-AI-Verification-v1.3.md)
   - 다중 검증 완료 기준: 내용 일치 AND 공적 식별자 API 확인 → "완료"
 
 ## :white_check_mark: Task Breakdown (실행 계획)
@@ -73,4 +73,4 @@ source_task_id: B-006
 - **Blocks:** B-007 (AuditTrail), B-008 (Notification)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-006 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-006 | SRS: v1.3*

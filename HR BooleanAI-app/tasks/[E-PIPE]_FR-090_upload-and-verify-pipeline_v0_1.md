@@ -15,8 +15,8 @@ source_task_id: P-001
 - **복잡도:** H
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#Seq-01`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic P`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#Seq-01`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic P`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: P-001
 - **Blocks:** T-023, U-001, U-005
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST P-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST P-001 | SRS: v1.3*

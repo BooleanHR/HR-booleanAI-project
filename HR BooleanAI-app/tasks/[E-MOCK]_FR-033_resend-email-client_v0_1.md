@@ -10,7 +10,7 @@ source_task_id: D-007
 ## :dart: Summary
 - **기능명:** [FR-033] Resend API 이메일 발송 클라이언트
 - **Epic:** Mock/External
-- **목적:** Resend API를 사용하여 이메일을 발송하는 클라이언트를 구현한다. 카카오 알림톡 대체용 (SRS §1.2).
+- **목적:** Resend API를 사용하여 이메일을 발송하는 클라이언트를 구현한다. 카카오 알림톡 대체용 (SRS §1.2). v1.3: agency_config.json 기반 동적 URL/셀렉터 로드. 4단계 폴백 전략 적용.
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `src/lib/resend.ts` 파일 생성
@@ -48,4 +48,4 @@ source_task_id: D-007
 - **Blocks:** L-004 (선택 발송)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST D-007 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST D-007 | SRS: v1.3*

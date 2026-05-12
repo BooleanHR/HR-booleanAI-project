@@ -40,4 +40,4 @@ source_task_id: F-003
 - **Blocks:** F-005 (이미지 회전 보정)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST F-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST F-003 | SRS: v1.3*

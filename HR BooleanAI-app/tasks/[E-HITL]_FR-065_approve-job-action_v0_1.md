@@ -10,13 +10,13 @@ source_task_id: K-003
 ## :dart: Summary
 - **기능명:** [FR-065] Approve Server Action approveJob()
 - **Epic:** HITL Approval
-- **목적:** Sets status=APPROVED, reviewer_id, reviewed_at in DB + updates viewer_log.
+- **목적:** Sets status=APPROVED, reviewer_id, reviewed_at in DB + updates viewer_log. v1.3: AI Reviewer Agent(APPROVE/REJECT/ESCALATE) 1차 자동 판정 후 담당자 최종 확인 구조.
 - **설계 원칙:** SRS REQ-FUNC-031, Seq-02
 - **복잡도:** M
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-031`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic K`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-031`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic K`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: K-003
 - **Blocks:** UI-022
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST K-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST K-003 | SRS: v1.3*

@@ -16,9 +16,9 @@ source_task_id: B-008
 - **설계 원칙:** SRS §3.8 (L634 ~ 654). Applicant + VerificationJob 양방향 FK. ADR-009 선택 발송.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — Notification`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ADR-009`](../SRS-HR-AI-Verification-v1.1.md) — 선택 발송 원칙
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.13 REQ-FUNC-100 ~ 105`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — Notification`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ADR-009`](../SRS-HR-AI-Verification-v1.3.md) — 선택 발송 원칙
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.13 REQ-FUNC-100 ~ 105`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Notification 모델 추가
@@ -71,4 +71,4 @@ source_task_id: B-008
 - **Blocks:** B-010 (일괄 마이그레이션)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-008 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-008 | SRS: v1.3*

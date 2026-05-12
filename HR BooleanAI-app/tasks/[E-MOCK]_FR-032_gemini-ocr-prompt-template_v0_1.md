@@ -10,15 +10,15 @@ source_task_id: D-006
 ## :dart: Summary
 - **기능명:** [FR-032] Gemini Vision OCR 프롬프트 템플릿 정의
 - **Epic:** Mock/External
-- **목적:** doc_type별 OCR 추출 필드와 doc_category 분류 지시를 포함하는 Gemini Vision API 프롬프트 템플릿을 정의한다. Vercel AI SDK의 `generateObject()`에 전달할 **Zod 스키마**도 함께 정의하여 구조화 JSON 응답을 강제한다.
+- **목적:** doc_type별 OCR 추출 필드와 doc_category 분류 지시를 포함하는 Gemini Vision API 프롬프트 템플릿을 정의한다. Vercel AI SDK의 `generateObject()`에 전달할 **Zod 스키마**도 함께 정의하여 구조화 JSON 응답을 강제한다. v1.3: agency_config.json 기반 동적 URL/셀렉터 로드. 4단계 폴백 전략 적용.
 - **설계 원칙:** SRS §3.12 GeminiOcrService. C-TEC-005 Vercel AI SDK. C-TEC-006 Gemini API.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.12 Class Diagram — GeminiOcrService`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.12 Class Diagram — GeminiOcrService`](../SRS-HR-AI-Verification-v1.3.md)
   - extractFields(imageFile) → OcrResult
   - classifyDocCategory(ocrResult) → String
   - buildPrompt(docType) → String
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.13 REQ-FUNC-002, 006`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.13 REQ-FUNC-002, 006`](../SRS-HR-AI-Verification-v1.3.md)
   - REQ-FUNC-002: generateObject()로 4개 필드 + confidence_score 구조화 JSON 추출
   - REQ-FUNC-006: doc_category 자동 분류
 
@@ -67,4 +67,4 @@ source_task_id: D-006
 - **Blocks:** G-001 (Gemini Vision API 호출 Server Action)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST D-006 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST D-006 | SRS: v1.3*

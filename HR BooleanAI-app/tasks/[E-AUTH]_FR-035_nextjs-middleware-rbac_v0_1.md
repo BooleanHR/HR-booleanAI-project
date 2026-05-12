@@ -14,8 +14,8 @@ source_task_id: E-002
 - **설계 원칙:** SRS §3.10 Middleware. §3.14 REQ-NF-024.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.10 Component Diagram — Middleware`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.14 REQ-NF-024`](../SRS-HR-AI-Verification-v1.1.md) — RBAC
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.10 Component Diagram — Middleware`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.14 REQ-NF-024`](../SRS-HR-AI-Verification-v1.3.md) — RBAC
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `src/middleware.ts` 구현
@@ -51,4 +51,4 @@ source_task_id: E-002
 - **Blocks:** 전체 보호된 경로 접근
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST E-002 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST E-002 | SRS: v1.3*

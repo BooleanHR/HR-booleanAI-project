@@ -10,7 +10,7 @@ source_task_id: D-005
 ## :dart: Summary
 - **기능명:** [FR-031] Seed 데이터 생성 스크립트
 - **Epic:** Mock/External
-- **목적:** 개발 환경에서 테스트용 초기 데이터를 자동 생성하는 Prisma Seed 스크립트를 작성한다. User 3건(역할별), Batch 1건, Applicant 6건(수험번호 유/무 각 3건)을 생성하여 즉시 기능 테스트가 가능한 환경을 확보한다.
+- **목적:** 개발 환경에서 테스트용 초기 데이터를 자동 생성하는 Prisma Seed 스크립트를 작성한다. User 3건(역할별), Batch 1건, Applicant 6건(수험번호 유/무 각 3건)을 생성하여 즉시 기능 테스트가 가능한 환경을 확보한다. v1.3: agency_config.json 기반 동적 URL/셀렉터 로드. 4단계 폴백 전략 적용.
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `prisma/seed.ts` 파일 생성
@@ -62,4 +62,4 @@ source_task_id: D-005
 - **Blocks:** 없음 (개발 편의용)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST D-005 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST D-005 | SRS: v1.3*

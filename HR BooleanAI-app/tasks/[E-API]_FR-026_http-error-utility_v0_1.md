@@ -14,7 +14,7 @@ source_task_id: C-010
 - **설계 원칙:** SRS §3.7 오류 응답 표준 (L359 ~ 366).
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.7 오류 응답 표준`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.7 오류 응답 표준`](../SRS-HR-AI-Verification-v1.3.md)
   - 400 Bad Request: 파라미터 누락 또는 파일 형식 오류
   - 401 Unauthorized: 미로그인 또는 세션 만료
   - 403 Forbidden: RBAC 권한 부족
@@ -76,4 +76,4 @@ source_task_id: C-010
 - **Blocks:** F-001 (파일 형식 검증), F-002 (파일 크기 검증)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST C-010 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST C-010 | SRS: v1.3*

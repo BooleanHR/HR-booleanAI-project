@@ -16,10 +16,10 @@ source_task_id: B-007
 - **설계 원칙:** SRS §3.8 (L616 ~ 632). ADR-006 논리적 불변성 (is_immutable=true). ADR-008 병렬 캡처 MVP 대안.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — AuditTrail`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ADR-006`](../SRS-HR-AI-Verification-v1.1.md) — 논리적 불변성
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ADR-008`](../SRS-HR-AI-Verification-v1.1.md) — 병렬 캡처 MVP 대안
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.13 REQ-FUNC-020 ~ 024`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — AuditTrail`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ADR-006`](../SRS-HR-AI-Verification-v1.3.md) — 논리적 불변성
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ADR-008`](../SRS-HR-AI-Verification-v1.3.md) — 병렬 캡처 MVP 대안
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.13 REQ-FUNC-020 ~ 024`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** AuditTrail 모델 추가
@@ -68,4 +68,4 @@ source_task_id: B-007
 - **Blocks:** B-010 (일괄 마이그레이션)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-007 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-007 | SRS: v1.3*

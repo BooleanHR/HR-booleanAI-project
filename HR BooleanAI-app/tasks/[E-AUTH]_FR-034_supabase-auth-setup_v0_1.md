@@ -14,7 +14,7 @@ source_task_id: E-001
 - **설계 원칙:** SRS §3.5 ADR. §3.14 REQ-NF-020. Supabase Auth 표준 SSR 패턴 사용.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.14 REQ-NF-020`](../SRS-HR-AI-Verification-v1.1.md) — 인증
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.14 REQ-NF-020`](../SRS-HR-AI-Verification-v1.3.md) — 인증
 - FR-004에서 이미 구현된 `src/lib/supabase/server.ts`, `src/lib/supabase/client.ts` 활용
 
 ## :white_check_mark: Task Breakdown (실행 계획)
@@ -49,4 +49,4 @@ source_task_id: E-001
 - **Blocks:** E-002 (Middleware RBAC), E-003 (RLS), UI-002 (로그인 페이지)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST E-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST E-001 | SRS: v1.3*

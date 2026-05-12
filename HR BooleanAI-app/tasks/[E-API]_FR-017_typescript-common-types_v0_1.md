@@ -14,8 +14,8 @@ source_task_id: C-001
 - **설계 원칙:** SRS §3.12 Class Diagram에 정의된 서비스 인터페이스를 TypeScript 타입으로 변환한다.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.12 Class Diagram`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.7 API Overview`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.12 Class Diagram`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.7 API Overview`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `src/types/ocr.ts` — OCR 관련 타입
@@ -114,4 +114,4 @@ source_task_id: C-001
 - **Blocks:** C-002 ~ C-009 (API DTO 정의), D-001 (Agency API 클라이언트)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST C-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST C-001 | SRS: v1.3*

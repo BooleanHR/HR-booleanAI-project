@@ -17,17 +17,17 @@ source_task_id: A-005
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.10 Component Diagram`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.10 Component Diagram`](../SRS-HR-AI-Verification-v1.3.md)
   - 컴포넌트: Server Actions(비즈니스 로직), Route Handlers(API), Middleware(Auth), Vercel AI SDK, sharp, exceljs, 파일 자동 명명 유틸리티
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.12 Class Diagram`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.12 Class Diagram`](../SRS-HR-AI-Verification-v1.3.md)
   - 서비스: VerificationService, GeminiOcrService, FileConversionService, FileNamingService, AgencyApiClient, AuditTrailService, NotificationService, ReportService, PollService
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 C-TEC-001 ~ 002`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 C-TEC-001 ~ 002`](../SRS-HR-AI-Verification-v1.3.md)
   - 단일 Next.js 풀스택 — Server Actions / Route Handlers만 사용
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.7 API Overview`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.7 API Overview`](../SRS-HR-AI-Verification-v1.3.md)
   - API 경로: `/api/verifications`, `/api/reports`, `/api/notifications`, `/api/dashboard`
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.11 Use Case Diagram`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.11 Use Case Diagram`](../SRS-HR-AI-Verification-v1.3.md)
   - 페이지: 서류 업로드, 대시보드, 승인/반려, PDF/엑셀 다운로드, 알림 관리, Audit Trail 열람, 로그인
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic A`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 표준 디렉토리 구조 생성
@@ -260,4 +260,4 @@ prisma/
   - 이후 모든 Logic 태스크 (Epic E ~ P) — 파일 배치 위치 참조
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST A-005 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST A-005 | SRS: v1.3*

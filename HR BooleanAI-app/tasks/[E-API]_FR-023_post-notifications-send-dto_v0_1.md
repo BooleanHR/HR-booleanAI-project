@@ -14,8 +14,8 @@ source_task_id: C-007
 - **설계 원칙:** §3.7 API Overview (POST /api/notifications/send)에 정의된 API 스펙을 TypeScript 인터페이스로 구현한다.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.7 API Overview (POST /api/notifications/send)`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic C`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.7 API Overview (POST /api/notifications/send)`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic C`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `src/types/api.ts`에 해당 Request/Response 인터페이스 추가
@@ -39,4 +39,4 @@ source_task_id: C-007
 - **Blocks:** 해당 API Route Handler/Server Action 구현
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST C-007 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST C-007 | SRS: v1.3*

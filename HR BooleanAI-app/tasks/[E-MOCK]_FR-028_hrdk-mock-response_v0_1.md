@@ -10,11 +10,11 @@ source_task_id: D-002
 ## :dart: Summary
 - **기능명:** [FR-028] HRDK API Mock 응답 함수 구현
 - **Epic:** Mock/External
-- **목적:** HRDK(한국산업인력공단) API 미연동 상태에서 자격증 유효 여부를 **고정값으로 반환**하는 Mock 함수를 구현한다. `mockUsed=true`를 반환 데이터에 포함하여 PoC에서 Mock 사용 건을 투명하게 추적한다.
+- **목적:** HRDK(한국산업인력공단) API 미연동 상태에서 자격증 유효 여부를 **고정값으로 반환**하는 Mock 함수를 구현한다. `mockUsed=true`를 반환 데이터에 포함하여 PoC에서 Mock 사용 건을 투명하게 추적한다. v1.3: agency_config.json 기반 동적 URL/셀렉터 로드. 4단계 폴백 전략 적용.
 - **설계 원칙:** SRS §1.2 Mock 대체. §3.13 REQ-FUNC-012.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§1.2 Mock 대체`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§1.2 Mock 대체`](../SRS-HR-AI-Verification-v1.3.md)
   - HRDK API: OAuth 2.0 계약 필요. PoC 시점 미체결 → Mock JSON 응답 반환.
 
 ## :white_check_mark: Task Breakdown (실행 계획)
@@ -40,4 +40,4 @@ source_task_id: D-002
 - **Blocks:** I-002 (Triple Check Layer 2)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST D-002 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST D-002 | SRS: v1.3*

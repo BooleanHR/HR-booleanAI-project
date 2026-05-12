@@ -16,9 +16,9 @@ source_task_id: B-010
 - **설계 원칙:** SRS §2.1 C-TEC-003 — SQLite(로컬) → PostgreSQL(배포) 듀얼 전략.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ASM-05`](../SRS-HR-AI-Verification-v1.1.md) — 로컬 SQLite, 배포 PostgreSQL
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 전체 Prisma Schema`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ASM-05`](../SRS-HR-AI-Verification-v1.3.md) — 로컬 SQLite, 배포 PostgreSQL
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 전체 Prisma Schema`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 전체 `schema.prisma` 최종 검증
@@ -96,4 +96,4 @@ source_task_id: B-010
   - V-001 (PostgreSQL 전환)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-010 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-010 | SRS: v1.3*

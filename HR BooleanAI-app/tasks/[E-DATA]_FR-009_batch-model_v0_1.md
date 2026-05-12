@@ -16,8 +16,8 @@ source_task_id: B-003
 - **설계 원칙:** SRS §3.8 (L535 ~ 548) Batch 모델. User → Batch 1:N 관계 (created_by FK).
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — Batch`](../SRS-HR-AI-Verification-v1.1.md)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 ERD — USER ||--o{ BATCH`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — Batch`](../SRS-HR-AI-Verification-v1.3.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 ERD — USER ||--o{ BATCH`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Batch 모델 추가
@@ -60,4 +60,4 @@ source_task_id: B-003
 - **Blocks:** B-004 (Applicant 모델), B-009 (Report 모델)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-003 | SRS: v1.3*

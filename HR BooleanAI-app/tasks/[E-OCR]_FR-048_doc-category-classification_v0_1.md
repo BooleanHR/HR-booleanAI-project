@@ -10,13 +10,13 @@ source_task_id: G-002
 ## :dart: Summary
 - **기능명:** [FR-048] doc_category auto-classification
 - **Epic:** OCR Engine
-- **목적:** Classifies document type from OCR results: graduation certificate, professional certificate, career certificate, etc. Classification instruction included in Gemini prompt.
+- **목적:** Classifies document type from OCR results: graduation certificate, professional certificate, career certificate, etc. Classification instruction included in Gemini prompt. v1.3: doc_category별 전용 프롬프트 분기 및 doc_source 자동 판별(webminwon/certpia/gov24/icerts) 적용.
 - **설계 원칙:** SRS REQ-FUNC-006
 - **복잡도:** M
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-006`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic G`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-006`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic G`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: G-002
 - **Blocks:** G-003, H-001
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST G-002 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST G-002 | SRS: v1.3*

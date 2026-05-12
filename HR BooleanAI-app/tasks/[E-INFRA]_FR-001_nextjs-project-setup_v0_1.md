@@ -17,15 +17,15 @@ source_task_id: A-001
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 시스템 내부 — 단일 통합 프레임워크`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 시스템 내부 — 단일 통합 프레임워크`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-001:** 모든 서비스는 Next.js (App Router) 기반 단일 풀스택으로 구현
   - **C-TEC-002:** 서버 로직은 Next.js Server Actions 또는 Route Handlers 만 사용
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 아키텍처 제약 (ADR)`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 아키텍처 제약 (ADR)`](../SRS-HR-AI-Verification-v1.3.md)
   - **ADR-001:** 단일 Next.js 풀스택 — 별도 백엔드 서버 금지
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.4 스택 선택 이유 및 제한사항`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.4 스택 선택 이유 및 제한사항`](../SRS-HR-AI-Verification-v1.3.md)
   - Next.js App Router 선택 이유: 풀스택 단일 파일, AI 코드 생성 친화적
   - 알려진 제한: Vercel Serverless 실행 시간 60초 제한 (Pro 기준)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic A: 프로젝트 초기 셋업`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic A: 프로젝트 초기 셋업`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** `npx create-next-app@latest ./` 명령으로 Next.js App Router 프로젝트 생성
@@ -112,4 +112,4 @@ source_task_id: A-001
   - C-010 (HTTP 오류 응답 표준)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST A-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST A-001 | SRS: v1.3*

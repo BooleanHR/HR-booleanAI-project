@@ -16,7 +16,7 @@ source_task_id: B-009
 - **설계 원칙:** SRS §3.8 (L656 ~ 671). Batch → Report 1:N, User → Report 1:N 관계.
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema — Report`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema — Report`](../SRS-HR-AI-Verification-v1.3.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Report 모델 추가
@@ -59,4 +59,4 @@ source_task_id: B-009
 - **Blocks:** B-010 (일괄 마이그레이션)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST B-009 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST B-009 | SRS: v1.3*

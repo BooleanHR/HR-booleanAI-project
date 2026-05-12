@@ -27,4 +27,4 @@ source_task_id: E-003
 - **Blocks:** J-004 (Audit Trail 조회)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST E-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST E-003 | SRS: v1.3*

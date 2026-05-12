@@ -48,4 +48,4 @@ source_task_id: F-001
 - **Blocks:** P-001 (통합 파이프라인)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST F-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST F-001 | SRS: v1.3*

@@ -10,13 +10,13 @@ source_task_id: K-005
 ## :dart: Summary
 - **기능명:** [FR-067] MANUAL_REVIEW queue query
 - **Epic:** HITL Approval
-- **목적:** Filters and displays MANUAL_REVIEW status jobs as separate list.
+- **목적:** Filters and displays MANUAL_REVIEW status jobs as separate list. v1.3: AI Reviewer Agent(APPROVE/REJECT/ESCALATE) 1차 자동 판정 후 담당자 최종 확인 구조.
 - **설계 원칙:** SRS REQ-FUNC-033
 - **복잡도:** L
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-033`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic K`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-033`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic K`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: K-005
 - **Blocks:** UI-023
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST K-005 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST K-005 | SRS: v1.3*

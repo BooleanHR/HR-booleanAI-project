@@ -10,13 +10,13 @@ source_task_id: K-001
 ## :dart: Summary
 - **기능명:** [FR-063] Verification result dashboard list query
 - **Epic:** HITL Approval
-- **목적:** Queries VerificationJob list (status, confidence_score, final_result) with SWR 5-second polling. ADR-007.
+- **목적:** Queries VerificationJob list (status, confidence_score, final_result) with SWR 5-second polling. ADR-007. v1.3: AI Reviewer Agent(APPROVE/REJECT/ESCALATE) 1차 자동 판정 후 담당자 최종 확인 구조.
 - **설계 원칙:** SRS REQ-FUNC-030, ADR-007
 - **복잡도:** M
 
 ## :link: References (Spec & Context)
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#REQ-FUNC-030`](../SRS-HR-AI-Verification-v1.1.md)
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic K`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#REQ-FUNC-030`](../SRS-HR-AI-Verification-v1.3.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic K`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** 핵심 로직/UI 구현 — SRS 참조 섹션 기반
@@ -40,4 +40,4 @@ source_task_id: K-001
 - **Blocks:** K-002, K-005, UI-020
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST K-001 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST K-001 | SRS: v1.3*

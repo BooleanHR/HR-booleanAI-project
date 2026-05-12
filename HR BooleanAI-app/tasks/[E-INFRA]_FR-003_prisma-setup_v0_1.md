@@ -17,16 +17,16 @@ source_task_id: A-003
 
 ## :link: References (Spec & Context)
 > :bulb: AI Agent & Dev Note: 작업 시작 전 아래 문서를 반드시 먼저 Read/Evaluate 할 것.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§2.1 C-TEC-003`](../SRS-HR-AI-Verification-v1.3.md)
   - **C-TEC-003:** DB는 Prisma + 로컬 SQLite(개발) → Prisma + Supabase PostgreSQL(배포). JSON 타입은 Text로 대체.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ASM-05`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ASM-05`](../SRS-HR-AI-Verification-v1.3.md)
   - **ASM-05:** 로컬 개발은 SQLite, Vercel 배포 시 Supabase PostgreSQL로 전환한다.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.8 Prisma Schema (MVP v1.1)`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.8 Prisma Schema (MVP v1.1)`](../SRS-HR-AI-Verification-v1.3.md)
   - Prisma 스키마 전체 정의 (8 모델, 7 Enum) — 참조용. 본 태스크에서는 **설정(config)만** 수행.
-- SRS 문서: [`SRS-HR-AI-Verification-v1.1.md#§3.5 ADR-001`](../SRS-HR-AI-Verification-v1.1.md)
+- SRS 문서: [`SRS-HR-AI-Verification-v1.3.md#§3.5 ADR-001`](../SRS-HR-AI-Verification-v1.3.md)
   - **ADR-001:** 단일 Next.js 풀스택 내에서 Prisma Client 사용
 - REF-06: Prisma 공식 문서 — SQLite↔PostgreSQL 마이그레이션
-- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1.1.md#Epic A, Epic B`](./TASK-LIST-HR-AI-Verification-v1.1.md)
+- TASK-LIST: [`TASK-LIST-HR-AI-Verification-v1_2.md#Epic A, Epic B`](./TASK-LIST-HR-AI-Verification-v1_2.md)
 
 ## :white_check_mark: Task Breakdown (실행 계획)
 - [ ] **TB-1:** Prisma CLI 및 클라이언트 설치
@@ -147,4 +147,4 @@ source_task_id: A-003
   - V-001 (배포 시 PostgreSQL 전환 — datasource 토글)
 
 ---
-*Document Version: v0.1 (초안) | Source: TASK-LIST A-003 | SRS: v1.1*
+*Document Version: v0.1 (초안) | Source: TASK-LIST A-003 | SRS: v1.3*
