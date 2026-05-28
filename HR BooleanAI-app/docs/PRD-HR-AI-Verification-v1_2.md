@@ -481,7 +481,10 @@ Excel 결과 파일 생성
 
 ## 6. 바이브코딩 에이전트 실행 가이드 (다음 단계)
 
-> 이 섹션은 Claude Code 에이전트가 실제 코드를 작성할 때 참조하는 실행 지침입니다.
+> **[2026-05-27 결정사항 추가]**  
+> - **RPA 실행 방식:** Next.js Server Action에서 Puppeteer 직접 실행 (Next.js 프로세스 내부)  
+> - **배포 전략:** 로컈 전용 (`npm run dev`)으로만 운영. Vercel 배포 없음 — E-NFR FR-124/125(Vercel) 태스크 연기  
+> - **이유:** Puppeteer는 로컈 Chrome에 직접 접근해야 하므로 서버리스 환경 불가. Worker 분리는 MVP 이후 고려.
 
 ### 실행 순서 (권장)
 
@@ -525,9 +528,12 @@ LOCAL_CAPTURES_BASE=./captures        # RPA 캡처 저장 경로
 # 이메일 (알림 발송)
 RESEND_API_KEY=your_resend_api_key
 
-# 개발/운영 모드
-MOCK_FALLBACK=true                    # true: RPA 실패 시 Mock 사용
-HEALTH_CHECK_INTERVAL=86400000        # ms = 24시간
+# 인증 (Auth)
+AUTH_MODE=hardcoded                  # MVP 단계: hardcoded | supabase (추후 교체)
+HARDCODED_ADMIN_EMAIL=test_admin@hrboolean.ai
+HARDCODED_ADMIN_PW=Admin123!
+HARDCODED_OPERATOR_EMAIL=test_operator@hrboolean.ai
+HARDCODED_OPERATOR_PW=Oper123!
 ```
 
 ### 핵심 패키지 목록

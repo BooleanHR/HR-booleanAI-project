@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("OPERATOR") // ADMIN | OPERATOR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Batch {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  status      String      @default("PENDING") // PENDING | RUNNING | COMPLETED | FAILED
+  totalCount  Int         @default(0)
+  passCount   Int         @default(0)
+  failCount   Int         @default(0)
+  escalateCount Int       @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  applicants  Applicant[]
+}
+
+model Applicant {
+  id          String            @id @default(cuid())
+  batchId     String
+  batch       Batch             @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  name        String
+  birthDate   String            // YYYYMMDD
+  email       String?
+  phone       String?
+  status      String            @default("PENDING") // PENDING | PROCESSING | COMPLETED | ESCALATE
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  documents   Document[]
+  verificationJobs VerificationJob[]
+}
+
+model Document {
+  id            String   @id @default(cuid())
+  applicantId   String
+  applicant     Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  category      String   // GRADUATION | CERTIFICATE | CAREER | LANGUAGE | INSURANCE
+  filePath      String
+  fileName      String
+  fileSize      Int?
+  mimeType      String?
+  trustScore    Float?
+  ocrData       String?  // JSON string
+  isExpired     Boolean  @default(false)
+  expiryDate    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model VerificationJob {
+  id              String    @id @default(cuid())
+  applicantId     String
+  applicant       Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  documentType    String    // TOEIC | OPIC | QNET | GRADUATION | CAREER
+  siteCode        String    // TOEIC_SITE | OPIC_SITE | QNET_SITE | GOVT24 | HIRA | EDUPURE | WINSPACK
+  rpaResult       String?   // JSON string: raw RPA result
+  captureUrl      String?   // screenshot path
+  geminiVerdict   String?   // APPROVE | REJECT | ESCALATE
+  geminiScore     Float?
+  geminiReason    String?
+  discrepancies   String?   // JSON string
+  mockUsed        Boolean   @default(false)
+  tierUsed        Int?      // 1~4
+  status          String    @default("PENDING") // PENDING | RUNNING | COMPLETED | FAILED | MANUAL
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model SiteCredential {
+  id          String   @id @default(cuid())
+  siteCode    String   @unique // TOEIC_SITE | OPIC_SITE | QNET_SITE | GOVT24
+  siteName    String
+  siteUrl     String
+  username    String?
+  encPassword String?  // AES-256-GCM encrypted
+  selectors   String?  // JSON: CSS selectors for RPA
+  extraConfig String?  // JSON: additional site-specific config
+  isActive    Boolean  @default(true)
+  lastTestedAt DateTime?
+  lastTestResult String? // SUCCESS | FAILED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model HealthLog {
+  id        String   @id @default(cuid())
+  siteCode  String
+  status    String   // OK | WARN | ERROR
+  message   String?
+  latencyMs Int?
+  createdAt DateTime @default(now())
+}

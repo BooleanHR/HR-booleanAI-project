@@ -1,0 +1,154 @@
+{
+  "agencies": [
+    {
+      "agency_id": "gov24_doc",
+      "display_name": "정부24 — 인터넷 발급문서 진위확인",
+      "url": "https://www.gov.kr/mw/EgovPageLink.do?link=confirm/AA040_confirm_id",
+      "auth_required": false,
+      "input_fields": [
+        { "field_key": "doc_confirm_number", "label": "문서확인번호", "format": "####-####-####-####" }
+      ],
+      "applicable_doc_types": ["졸업증명서", "성적증명서", "보훈증명서", "장애인증명서", "4대보험가입내역"],
+      "rpa_selectors": {
+        "doc_confirm_number": ["#docNumber", "input[name='docNum']", "input[placeholder*='문서확인번호']"],
+        "submit": ["#btnConfirm", "button[type='submit']"],
+        "result": ["#resultArea", ".result-content"]
+      },
+      "valid_days": 180,
+      "notes": "발급일로부터 180일 이내 유효"
+    },
+    {
+      "agency_id": "qnet_cert",
+      "display_name": "Q-Net — 자격증 진위확인 (수첩형/상장형)",
+      "url": "https://www.q-net.or.kr/qlf006.do?id=qlf00601&gSite=Q&gId=",
+      "auth_required": false,
+      "input_fields": [
+        { "field_key": "cert_type", "label": "자격증 종류", "type": "select", "options": ["수첩형 자격증", "상장형 자격증"] },
+        { "field_key": "name", "label": "성명" },
+        { "field_key": "cert_number", "label": "자격증번호", "format": "##-##-######" }
+      ],
+      "applicable_doc_types": ["자격증_수첩형", "자격증_상장형"],
+      "rpa_selectors": {
+        "cert_type": ["#certGb", "select[name='certGb']"],
+        "name": ["#name", "input[name='name']"],
+        "cert_number": ["#qlsnCd", "input[name='qlsnCd']"],
+        "submit": ["#btnSearch", ".btn-search"],
+        "result": ["#certResult", ".result-wrap"]
+      },
+      "valid_days": null,
+      "notes": "90일 조회 가능 (발급일 기준)"
+    },
+    {
+      "agency_id": "qnet_cert_confirm",
+      "display_name": "Q-Net — 확인서 진위확인",
+      "url": "https://www.q-net.or.kr/iss004.do?id=iss00401&gSite=Q&gId=",
+      "auth_required": false,
+      "input_fields": [
+        { "field_key": "name", "label": "성명" },
+        { "field_key": "doc_confirm_number", "label": "문서확인번호" }
+      ],
+      "applicable_doc_types": ["자격증_확인서"],
+      "rpa_selectors": {
+        "name": ["#nm", "input[name='nm']"],
+        "doc_confirm_number": ["#docNo", "input[name='docNo']"],
+        "submit": ["#btnSearch"],
+        "result": ["#resultDiv"]
+      },
+      "valid_days": 90,
+      "notes": "발급일로부터 90일 이내만 조회 가능"
+    },
+    {
+      "agency_id": "toeic_ybm",
+      "display_name": "YBM — TOEIC 성적 진위확인",
+      "url": "https://exam.toeic.co.kr/common/commonPreLogin.php?returnUrl=/result/truthInput.php",
+      "auth_required": true,
+      "credential_key": "toeic_ybm",
+      "input_fields": [
+        { "field_key": "name", "label": "이름" },
+        { "field_key": "birth_date", "label": "생년월일", "format": "YYYYMMDD" },
+        { "field_key": "test_date", "label": "응시일자", "format": "YYYYMMDD" },
+        { "field_key": "registration_number", "label": "수험번호" },
+        { "field_key": "issue_number", "label": "발급번호" }
+      ],
+      "applicable_doc_types": ["토익"],
+      "rpa_selectors": {
+        "name": ["#nm", "input[name='nm']"],
+        "birth_date": ["#birthDt"],
+        "test_date": ["#testDt"],
+        "registration_number": ["#regNo"],
+        "issue_number": ["#issueNo"],
+        "submit": ["#btnSearch", "button.btn-search"],
+        "result": ["#resultWrap"]
+      },
+      "valid_days": null,
+      "notes": "기업 회원 로그인 필수. 사이트 계정 설정 필요."
+    },
+    {
+      "agency_id": "opic_actfl",
+      "display_name": "OPIc — 인증서 진위확인",
+      "url": "https://www.opic.or.kr/opics/servlet/controller.opic.site.certi.CertiServlet?p_process=select-certicontrast",
+      "auth_required": false,
+      "input_fields": [
+        { "field_key": "doc_confirm_number", "label": "인증서 번호", "format": "####-####-####-####-####" }
+      ],
+      "applicable_doc_types": ["오픽"],
+      "rpa_selectors": {
+        "doc_confirm_number": ["#certNo", "input[name='certNo']"],
+        "submit": ["#btnSearch"],
+        "result": ["#resultArea"]
+      },
+      "valid_days": 730,
+      "notes": "시험일로부터 2년 이내. 만료 시 자동 FAIL 처리."
+    },
+    {
+      "agency_id": "korcham_cert",
+      "display_name": "대한상공회의소 — 자격증 진위확인",
+      "url": "https://license.korcham.net/mb/grplogin.do",
+      "auth_required": true,
+      "credential_key": "korcham",
+      "input_fields": [
+        { "field_key": "cert_number", "label": "자격번호" },
+        { "field_key": "name", "label": "성명" }
+      ],
+      "applicable_doc_types": ["자격증_카드형_대한상공회의소"],
+      "rpa_selectors": {
+        "cert_number": ["#certNo"],
+        "name": ["#nm"],
+        "submit": ["#btnSearch"]
+      },
+      "valid_days": null,
+      "notes": "계정 ID: exc20220 / PW: expt2020! (실제 운영 시 암호화 저장)"
+    },
+    {
+      "agency_id": "certpia",
+      "display_name": "써트피아 — 졸업증명서 진위확인",
+      "url": "https://www.certpia.com/",
+      "auth_required": false,
+      "input_fields": [
+        { "field_key": "doc_confirm_number", "label": "문서확인번호 (Internet no)" }
+      ],
+      "applicable_doc_types": ["졸업증명서_써트피아"],
+      "rpa_selectors": {
+        "doc_confirm_number": ["#internetNo", "input[name='internetNo']"],
+        "submit": ["#btnSearch"]
+      },
+      "valid_days": 180,
+      "notes": "써트피아 발급 서류 전용"
+    },
+    {
+      "agency_id": "webminwon",
+      "display_name": "웹민원센터 — 진위확인",
+      "url": "https://www.webminwon.com/",
+      "auth_required": false,
+      "input_fields": [
+        { "field_key": "doc_confirm_number", "label": "문서확인번호" }
+      ],
+      "applicable_doc_types": ["졸업증명서_웹민원센터", "성적증명서_웹민원센터"],
+      "rpa_selectors": {
+        "doc_confirm_number": ["#docConfirmNo"]
+      },
+      "valid_days": 180,
+      "notes": "웹민원센터 발급 서류 전용"
+    }
+  ]
+}

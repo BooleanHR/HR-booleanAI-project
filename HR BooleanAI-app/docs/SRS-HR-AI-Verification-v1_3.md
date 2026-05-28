@@ -1,4 +1,4 @@
-# HR AI 서류 진위확인 솔루션
+﻿# HR AI 서류 진위확인 솔루션
 # Software Requirements Specification (SRS) v1.3
 
 **Document ID:** SRS-001  
@@ -856,8 +856,16 @@ Image:      sharp (변환, 회전 보정)
 Email:      Resend API
 Crypto:     Node.js crypto (AES-256-GCM)
 Scheduler:  node-cron (헬스체크)
-```
+
+# [2026-05-27 결정사항]
+Arch:       Next.js 클린 스타트. HTML Prototype(v0.9.x)는 레퍼런스 전용 (코드 변경 금지)
+Auth(MVP):  하드코딩 계정 2개 (Admin/Operator) -- Supabase Auth는 MVP 이후 단계에서 적용
+            E-AUTH 태스크(FR-034~036)는 Phase 2(추후) 예정으로 연기
+DB:         SQLite (Prisma) 로컬 전용으로 확정. Supabase Postgres/Storage/RLS 완전 제거.
+            연동 태스크 연기: E-AUTH(FR-034~036), FR-043(Supabase Storage 업로드)
+File:       서류 이미지/결과물은 로컬 파일시스템(fs) 저장 전용. 클라우드 업로드 없음.
+`
 
 ---
 
-*Document Version: SRS v1.3 | 기반: SRS v1.2 + 제출서류 유형 PDF v0.2 | 작성: 2026-05-12*
+*Document Version: SRS v1.3 | 기반: SRS v1.2 + 제출서류 유형 PDF v0.2 | 작성: 2026-05-12 | 결정사항 업데이트: 2026-05-27*

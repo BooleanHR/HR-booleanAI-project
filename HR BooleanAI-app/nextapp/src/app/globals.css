@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════
+   CSS VARIABLES (Design Tokens — HR BooleanAI)
+═══════════════════════════════════════════════ */
+:root {
+  --bg: #06080f;
+  --s1: #0b0f1a;
+  --s2: #101522;
+  --s3: #161d2e;
+  --s4: #1c2438;
+  --bd1: rgba(255, 255, 255, .06);
+  --bd2: rgba(255, 255, 255, .1);
+  --bd3: rgba(255, 255, 255, .16);
+  --tx0: #dce4f0;
+  --tx1: rgba(220, 228, 240, .65);
+  --tx2: rgba(220, 228, 240, .38);
+  --tx3: rgba(220, 228, 240, .2);
+  --acc: #00d4aa;
+  --acc2: rgba(0, 212, 170, .12);
+  --acc3: rgba(0, 212, 170, .3);
+  --red: #ff4d6d;
+  --red2: rgba(255, 77, 109, .12);
+  --red3: rgba(255, 77, 109, .3);
+  --yel: #f5c842;
+  --yel2: rgba(245, 200, 66, .12);
+  --yel3: rgba(245, 200, 66, .3);
+  --blu: #4d8fff;
+  --blu2: rgba(77, 143, 255, .12);
+  --blu3: rgba(77, 143, 255, .3);
+  --r: 8px;
+  --rl: 14px;
+  --sh: 0 8px 32px rgba(0,0,0,.5);
+  --font-noto: 'Noto Sans KR', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ═══════════════════════════════════════════════
+   GLOBAL RESET
+═══════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--tx0);
+  font-family: var(--font-noto);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes fuUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .25; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mIn {
+  from { opacity: 0; transform: scale(.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.animate-fu-up    { animation: fuUp .6s ease both; }
+.animate-blink    { animation: blink 2s infinite; }
+.animate-spin     { animation: spin 1s linear infinite; }
+.animate-modal-in { animation: mIn .22s ease; }
+
+/* ═══════════════════════════════════════════════
+   SHARED UTILITY CLASSES
+═══════════════════════════════════════════════ */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--r);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-noto);
+  transition: all .2s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-acc {
+  background: var(--acc);
+  color: #000;
+  box-shadow: 0 0 24px rgba(0, 212, 170, .2);
+}
+.btn-acc:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 32px rgba(0, 212, 170, .35);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--tx1);
+  border: 1px solid var(--bd2);
+}
+.btn-ghost:hover {
+  border-color: var(--bd3);
+  color: var(--tx0);
+}
+
+.btn-danger {
+  background: var(--red2);
+  color: var(--red);
+  border: 1px solid var(--red3);
+}
+.btn-danger:hover { background: rgba(255, 77, 109, .22); }
+
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn-lg { padding: 13px 28px; font-size: 15px; }
+
+/* Form Inputs */
+.inp {
+  width: 100%;
+  background: var(--s3);
+  border: 1px solid var(--bd2);
+  color: var(--tx0);
+  font-size: 13px;
+  font-family: var(--font-noto);
+  padding: 10px 13px;
+  border-radius: var(--r);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.inp:focus {
+  border-color: var(--acc);
+  box-shadow: 0 0 0 3px rgba(0, 212, 170, .1);
+}
+.inp::placeholder { color: var(--tx3); }
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+}
+.b-pass   { background: rgba(0,212,170,.13); color: var(--acc); }
+.b-fail   { background: rgba(255,77,109,.13); color: var(--red); }
+.b-manual { background: rgba(245,200,66,.13); color: var(--yel); }
+.b-info   { background: rgba(77,143,255,.13); color: var(--blu); }
+.b-pending { background: rgba(255,255,255,.07); color: var(--tx2); }
+
+/* Card */
+.card {
+  background: var(--s2);
+  border: 1px solid var(--bd1);
+  border-radius: var(--rl);
+  transition: border-color .2s, box-shadow .2s;
+}
+.card-hover:hover {
+  border-color: var(--acc);
+  box-shadow: 0 0 20px rgba(0,212,170,.08);
+}
+
+/* Grid helper */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--s1); }
+::-webkit-scrollbar-thumb { background: var(--bd3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.25); }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0,212,170,.25);
+  color: var(--tx0);
+}

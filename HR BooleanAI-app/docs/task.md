@@ -1,0 +1,23 @@
+# 작업 목록 (Task List) - HR AI Next.js MVP 전환
+
+- [x] **1단계: 프로젝트 초기화 및 데이터베이스 설정**
+  - [x] `HR BooleanAI-app` 폴더 내에 Next.js 14 (App Router) 초기화 및 패키지 설정
+  - [x] Tailwind CSS 및 shadcn/ui 디자인 시스템 설치 및 구성
+  - [x] SQLite용 Prisma 스키마 (`schema.prisma`) 작성
+  - [x] Prisma 마이그레이션 실행 및 클라이언트 생성
+- [x] **2단계: 핵심 엔진 및 유틸리티 구현**
+  - [x] 기관 패스워드 암호화/복호화 유틸리티 구현 (`credentials.ts`)
+  - [x] Puppeteer Stealth 브라우저 팩토리 구현 (`browser.ts`)
+  - [x] 4단계 폴백(Fallback) 캡처 엔진 구현 (`capture.ts`)
+  - [x] Gemini AI Reviewer Agent 연동 로직 구현 (`reviewer-agent.ts`)
+  - [x] 서류 유효기간 자동 검사 (`expiry-check.ts`) 및 경력사항 1:N 매칭 알고리즘 구현 (`career-records-matching.ts`)
+- [/] **3단계: 페이지 라우팅 및 UI 컴포넌트 개발**
+  - [x] 로그인 화면 및 하드코딩 계정 세션 처리 (`/login` 및 루트 페이지)
+  - [x] 대시보드 UI 개발 (`/dashboard` - 스캔 시작, 배치 목록, ESCALATE 처리 현황 배너)
+  - [x] 기관 설정 관리 인터페이스 개발 (`/settings/agencies` - hot-load 및 RPA 테스트 폼)
+  - [ ] 수동 처리(에듀퓨어/윈스팩) 리스트 및 엑셀 다운로드/결과 수동 업로드 기능 구현
+  - [ ] 이메일 알림 발송용 Resend API 연동 개발
+- [/] **4단계: 빌드 검증 및 최종 테스트**
+  - [x] `npm run build` 정적 빌드 오류 여부 검사
+  - [x] 암호화, 날짜 계산, 경력 매칭 로직 스모크 테스트 스크립트 실행
+  - [ ] 전체 서비스 최종 로컬 통합 구동 검증
