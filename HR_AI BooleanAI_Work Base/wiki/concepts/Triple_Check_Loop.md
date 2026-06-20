@@ -22,3 +22,5 @@ tags: [wiki/concept, HR_AI, Architecture, Logic]
 - 연관 개념: [[Self_Service_Fallback]], [[Parallel_Capture]]
 - 파생 출처: [[source_3_value_chain]], [[source_5_problem_definition]]
 - 주요 타겟: [[High_Growth_IT_Finance]]
+- 성장 검증: [[Day51_ARRR_and_Hypothesis]]
+

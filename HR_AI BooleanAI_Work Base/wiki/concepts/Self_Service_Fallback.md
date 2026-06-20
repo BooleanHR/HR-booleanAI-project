@@ -22,3 +22,4 @@ tags: [wiki/concept, HR_AI, UX, Efficiency]
 **관련 노드 탐색 (Related Nodes):**
 - 연관 개념: [[Triple_Check_Loop]]
 - 연관 주체: [[HR_Manager_Persona]]
+- 성장 검증: [[Day51_ARRR_and_Hypothesis]]

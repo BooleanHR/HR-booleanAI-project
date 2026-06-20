@@ -28,8 +28,13 @@
 - [[source_9_aos_dos_analysis]]
 - [[source_10_jtbd_interview]]
 
+## [[_Growth_Verification_MOC|Growth & Verification (성장 및 검증)]]
+성장 퍼널, 비즈니스 가설 수립, 북극성 지표(NSM), 실험 설계 및 GA4 이벤트 추적 전략
+- [[Day51_ARRR_and_Hypothesis]]
+
 ---
 ## 연관 문서 (Related Notes)
 - [[WIKI_SCHEMA]] : 위키 운영 및 관리 스키마
 - [[log]] : 위키 활동 작동 로그
 - [[llm-wiki.ko]] : 기반 설계 패턴
+
