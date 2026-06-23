@@ -43,6 +43,7 @@ model Applicant {
   email       String?
   phone       String?
   status      String            @default("PENDING") // PENDING | PROCESSING | COMPLETED | ESCALATE
+  rejectReason String?          // REJECT 판정 시 사유 (이메일 발송용)
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
   documents   Document[]
@@ -77,6 +78,10 @@ model VerificationJob {
   geminiVerdict   String?   // APPROVE | REJECT | ESCALATE
   geminiScore     Float?
   geminiReason    String?
+  claudeVerdict   String?   // APPROVE | REJECT | ESCALATE (Claude 판정)
+  claudeScore     Float?    // Claude 신뢰도 점수
+  claudeReason    String?   // Claude 판정 근거
+  finalVerdict    String?   // 최종 판정 (Claude 우선, 없으면 Gemini)
   discrepancies   String?   // JSON string
   mockUsed        Boolean   @default(false)
   tierUsed        Int?      // 1~4

@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>누적 작업 보고서 — HR BooleanAI Growth & Verification + MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f1a;
+      --s1: #111827;
+      --s2: #1a2236;
+      --s3: #243049;
+      --bd1: rgba(255,255,255,.06);
+      --bd2: rgba(255,255,255,.1);
+      --tx0: #e8ecf4;
+      --tx1: #a8b4c8;
+      --tx2: #6b7a94;
+      --tx3: #4a5568;
+      --acc: #34d399;
+      --acc2: rgba(52,211,153,.08);
+      --acc3: rgba(52,211,153,.2);
+      --blu: #60a5fa;
+      --yel: #fbbf24;
+      --red: #f87171;
+      --pur: #a78bfa;
+      --r: 8px;
+      --rl: 14px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--tx0);
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 48px 32px; }
+
+    /* ── 히어로 ── */
+    .hero {
+      background: linear-gradient(135deg, rgba(52,211,153,.09), rgba(96,165,250,.07), rgba(167,139,250,.05));
+      border: 1px solid var(--bd2);
+      border-radius: var(--rl);
+      padding: 44px 40px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(52,211,153,.15), transparent 70%);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -40px; left: 40%;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(96,165,250,.1), transparent 70%);
+      border-radius: 50%;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: var(--acc2); border: 1px solid var(--acc3); color: var(--acc);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+      padding: 4px 12px; border-radius: 100px; letter-spacing: 1px; margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.3; }
+    .hero .subtitle { font-size: 14px; color: var(--tx1); max-width: 640px; }
+    .hero .meta {
+      display: flex; gap: 24px; margin-top: 20px;
+      font-size: 12px; color: var(--tx2); font-family: 'JetBrains Mono', monospace; flex-wrap: wrap;
+    }
+    .hero .meta span { display: flex; align-items: center; gap: 6px; }
+
+    /* ── 타임라인 네비 ── */
+    .timeline-nav {
+      display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;
+    }
+    .tl-chip {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--s2); border: 1px solid var(--bd1);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: 12px; font-family: 'JetBrains Mono', monospace;
+      transition: border-color .2s;
+    }
+    .tl-chip.done { border-color: var(--acc3); color: var(--acc); }
+    .tl-chip.done .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--acc); }
+    .tl-chip.new { border-color: rgba(96,165,250,.35); color: var(--blu); }
+    .tl-chip.new .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blu); animation: blink 1.2s infinite; }
+    .tl-chip.pend { color: var(--tx3); }
+    .tl-chip.pend .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tx3); }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+
+    /* ── 세션 구분선 ── */
+    .session-divider {
+      display: flex; align-items: center; gap: 14px; margin: 40px 0 24px;
+    }
+    .session-divider .line { flex: 1; height: 1px; background: var(--bd2); }
+    .session-divider .label {
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+      color: var(--tx2); letter-spacing: 1.5px; white-space: nowrap;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .session-divider .label .tag {
+      padding: 2px 10px; border-radius: 100px; font-size: 10px; font-weight: 700;
+    }
+    .tag-done { background: var(--acc2); border: 1px solid var(--acc3); color: var(--acc); }
+    .tag-new { background: rgba(96,165,250,.1); border: 1px solid rgba(96,165,250,.25); color: var(--blu); }
+
+    /* ── 섹션 ── */
+    .section {
+      background: var(--s1); border: 1px solid var(--bd1); border-radius: var(--rl);
+      padding: 32px 28px; margin-bottom: 24px;
+    }
+    .section h2 {
+      font-size: 18px; font-weight: 700; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px; letter-spacing: -0.3px;
+    }
+    .section h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; color: var(--tx0); }
+    .section p, .section li { font-size: 14px; color: var(--tx1); }
+    .section ul { padding-left: 20px; }
+    .section li { margin-bottom: 6px; }
+
+    /* ── 테이블 ── */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0; }
+    thead th {
+      background: var(--s2); color: var(--tx2); font-weight: 600; text-align: left;
+      padding: 10px 14px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;
+      border-bottom: 1px solid var(--bd2);
+    }
+    tbody td { padding: 10px 14px; border-bottom: 1px solid var(--bd1); color: var(--tx1); }
+    tbody tr:hover { background: rgba(255,255,255,.02); }
+
+    /* ── 카드 그리드 ── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 16px 0; }
+    .card {
+      background: var(--s2); border: 1px solid var(--bd1); border-radius: var(--r);
+      padding: 20px; transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: var(--acc3); transform: translateY(-2px); }
+    .card.new-card { border-color: rgba(96,165,250,.25); }
+    .card.new-card:hover { border-color: rgba(96,165,250,.5); }
+    .card .icon { font-size: 22px; margin-bottom: 10px; }
+    .card .title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .card .desc { font-size: 12px; color: var(--tx2); line-height: 1.6; }
+    .card .new-tag {
+      display: inline-block; font-size: 9px; font-weight: 700; font-family: 'JetBrains Mono', monospace;
+      background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.3); color: var(--blu);
+      padding: 1px 7px; border-radius: 100px; margin-bottom: 8px;
+    }
+
+    /* ── 상태 배지 ── */
+    .status {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-family: 'JetBrains Mono', monospace;
+      font-weight: 700; padding: 3px 10px; border-radius: 100px;
+    }
+    .status.pass { background: rgba(52,211,153,.12); color: var(--acc); border: 1px solid var(--acc3); }
+    .status.warn { background: rgba(251,191,36,.1); color: var(--yel); border: 1px solid rgba(251,191,36,.25); }
+    .status.fail { background: rgba(248,113,113,.1); color: var(--red); border: 1px solid rgba(248,113,113,.2); }
+    .status.info { background: rgba(96,165,250,.1); color: var(--blu); border: 1px solid rgba(96,165,250,.2); }
+    .status.new { background: rgba(167,139,250,.1); color: var(--pur); border: 1px solid rgba(167,139,250,.2); }
+
+    /* ── 가설 카드 ── */
+    .hypo {
+      background: var(--s2); border-left: 3px solid var(--acc);
+      border-radius: 0 var(--r) var(--r) 0; padding: 18px 20px; margin: 14px 0;
+    }
+    .hypo.h2 { border-left-color: var(--blu); }
+    .hypo.h3 { border-left-color: var(--pur); }
+    .hypo .hypo-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .hypo .hypo-body { font-size: 13px; color: var(--tx1); line-height: 1.7; }
+    .hypo .metric {
+      display: inline-block; background: var(--s3); color: var(--tx0);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px;
+      padding: 2px 8px; border-radius: 4px; margin-top: 8px;
+    }
+
+    /* ── 진행 바 ── */
+    .progress-wrap { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+    .progress-bar { flex: 1; height: 8px; background: var(--s3); border-radius: 100px; overflow: hidden; }
+    .progress-bar .fill {
+      height: 100%; border-radius: 100px;
+      background: linear-gradient(90deg, var(--acc), var(--blu));
+      transition: width .5s ease;
+    }
+    .progress-label { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--acc); min-width: 40px; text-align: right; }
+
+    /* ── 코드 블록 ── */
+    .code-block {
+      background: #0d1117; border: 1px solid var(--bd1); border-radius: var(--r);
+      padding: 16px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--tx1); overflow-x: auto; white-space: pre; line-height: 1.8; margin: 12px 0;
+    }
+    .code-block .keyword { color: var(--pur); }
+    .code-block .string { color: var(--acc); }
+    .code-block .comment { color: var(--tx3); font-style: italic; }
+    .code-block .fixed { color: var(--red); text-decoration: line-through; }
+    .code-block .correct { color: var(--acc); }
+
+    /* ── 경고 박스 ── */
+    .warn-box {
+      background: rgba(248,113,113,.06); border: 1px solid rgba(248,113,113,.18);
+      border-radius: var(--r); padding: 14px 18px; margin: 12px 0;
+      font-size: 13px; color: var(--tx1);
+    }
+    .warn-box .title { font-weight: 700; color: var(--red); margin-bottom: 8px; font-size: 13px; }
+    .fix-box {
+      background: rgba(52,211,153,.05); border: 1px solid rgba(52,211,153,.18);
+      border-radius: var(--r); padding: 14px 18px; margin: 12px 0;
+      font-size: 13px; color: var(--tx1);
+    }
+    .fix-box .title { font-weight: 700; color: var(--acc); margin-bottom: 8px; font-size: 13px; }
+
+    /* ── 퍼널 ── */
+    .funnel { display: flex; flex-direction: column; gap: 2px; margin: 20px 0; }
+    .funnel-step {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 18px; border-radius: var(--r); transition: transform .2s;
+    }
+    .funnel-step:hover { transform: translateX(6px); }
+    .funnel-step .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+    .funnel-step .step-body { flex: 1; }
+    .funnel-step .step-title { font-size: 14px; font-weight: 600; }
+    .funnel-step .step-desc { font-size: 12px; color: var(--tx2); margin-top: 2px; }
+    .f1 { background: rgba(52,211,153,.06); } .f1 .step-num { background: var(--acc); color: #000; }
+    .f2 { background: rgba(96,165,250,.06); } .f2 .step-num { background: var(--blu); color: #000; }
+    .f3 { background: rgba(167,139,250,.06); } .f3 .step-num { background: var(--pur); color: #000; }
+    .f4 { background: rgba(251,191,36,.06); } .f4 .step-num { background: var(--yel); color: #000; }
+    .f5 { background: rgba(248,113,113,.06); } .f5 .step-num { background: var(--red); color: #000; }
+
+    /* ── 파이프라인 다이어그램 ── */
+    .pipeline {
+      display: flex; align-items: center; gap: 0; margin: 20px 0; flex-wrap: wrap;
+    }
+    .pipe-step {
+      background: var(--s2); border: 1px solid var(--bd2);
+      border-radius: var(--r); padding: 14px 16px; min-width: 130px;
+      font-size: 12px; text-align: center; transition: border-color .2s;
+    }
+    .pipe-step:hover { border-color: var(--acc3); }
+    .pipe-step .pipe-icon { font-size: 20px; margin-bottom: 6px; }
+    .pipe-step .pipe-label { font-weight: 600; font-size: 12px; }
+    .pipe-step .pipe-sub { font-size: 10px; color: var(--tx2); margin-top: 3px; }
+    .pipe-arrow {
+      font-size: 18px; color: var(--tx3); padding: 0 6px; flex-shrink: 0;
+    }
+    .pipe-step.claude { border-color: rgba(167,139,250,.35); }
+    .pipe-step.db { border-color: rgba(96,165,250,.35); }
+    .pipe-step.email { border-color: rgba(251,191,36,.35); }
+
+    /* ── 푸터 ── */
+    .footer {
+      text-align: center; padding: 32px 0 48px;
+      font-size: 11px; color: var(--tx3); font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media (max-width: 640px) {
+      .container { padding: 24px 16px; }
+      .hero { padding: 28px 20px; }
+      .hero h1 { font-size: 22px; }
+      .card-grid { grid-template-columns: 1fr; }
+      .pipeline { flex-direction: column; }
+      .pipe-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ── 히어로 ── -->
+  <div class="hero">
+    <div class="badge">누적 작업 보고서 · GROWTH & VERIFICATION + MVP</div>
+    <h1>📊 HR BooleanAI — 종합 작업 보고서</h1>
+    <p class="subtitle">Day 51 성장 프레임워크 설계부터 10주차 Claude 에이전트, 11주차 MVP 비즈니스 파이프라인 구현까지의 전체 진행 상황을 기록합니다.</p>
+    <div class="meta">
+      <span>📅 최초 작성: 2026-06-20</span>
+      <span>🔄 최종 업데이트: 2026-06-23</span>
+      <span>👤 HR BooleanAI Team</span>
+      <span>📍 wiki/growth_verification/ + src/</span>
+    </div>
+  </div>
+
+  <!-- ── 타임라인 진행 네비 ── -->
+  <div class="timeline-nav">
+    <div class="tl-chip done"><span class="dot"></span>Day 51 · ARRR & 가설</div>
+    <div class="tl-chip done"><span class="dot"></span>Day 52 · NSM & 실험 설계</div>
+    <div class="tl-chip new"><span class="dot"></span>10주차 · Claude 에이전트</div>
+    <div class="tl-chip new"><span class="dot"></span>11주차 · MVP 파이프라인</div>
+    <div class="tl-chip pend"><span class="dot"></span>Day 53 · GA4 코호트</div>
+    <div class="tl-chip pend"><span class="dot"></span>Day 54 · 검증 계획서</div>
+    <div class="tl-chip pend"><span class="dot"></span>Day 55 · GA4 구현</div>
+  </div>
+
+  <!-- ── 전체 진행률 ── -->
+  <div class="section">
+    <h2>📋 전체 작업 진행 현황</h2>
+
+    <h3>전체 진행률 (기획 Wiki + 코드 구현 통합)</h3>
+    <p style="font-size:12px; color:var(--tx2); margin-bottom:8px;">Day 51~55 Wiki 5단계 + 10주차·11주차 코드 구현 2단계 = 총 7단계 중 4단계 완료</p>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="fill" style="width:57%"></div></div>
+      <div class="progress-label">57%</div>
+    </div>
+
+    <table style="margin-top:20px;">
+      <thead>
+        <tr>
+          <th>작업 세션</th>
+          <th>날짜</th>
+          <th>작업 항목</th>
+          <th>상태</th>
+          <th>산출물</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Day 51 -->
+        <tr>
+          <td rowspan="6" style="color:var(--acc); font-weight:700; vertical-align:top;">Day 51<br><span style="font-size:10px; color:var(--tx3);">2026-06-20</span></td>
+          <td rowspan="6" style="color:var(--tx3); font-size:11px; vertical-align:top;">2026-06-20</td>
+          <td>growth_verification/ 전용 폴더 신규 개설</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>wiki/growth_verification/</code></td>
+        </tr>
+        <tr>
+          <td>MOC 생성 및 Day 52~55 로드맵 연결</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>_Growth_Verification_MOC.md</code></td>
+        </tr>
+        <tr>
+          <td>ARRR 프레임워크 & 핵심 가설 3종 수립</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>Day51_ARRR_and_Hypothesis.md</code></td>
+        </tr>
+        <tr>
+          <td>위키 마스터 인덱스(index.md) 업데이트</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>wiki/index.md</code></td>
+        </tr>
+        <tr>
+          <td>위키 로그(log.md) 이력 기록</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>wiki/log.md</code></td>
+        </tr>
+        <tr>
+          <td>Lint 루프 #1: 양방향 참조 무결성 검증 (3건 역참조 보강)</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td>3개 개념 노드 보강</td>
+        </tr>
+
+        <!-- Day 52 -->
+        <tr>
+          <td style="color:var(--acc); font-weight:700;">Day 52</td>
+          <td style="color:var(--tx3); font-size:11px;">2026-06-23</td>
+          <td>북극성 지표(NSM) 정의 + A/B 테스트 실험 설계 2종</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>Day52_NSM_and_Experiment_Design.md</code></td>
+        </tr>
+
+        <!-- 10주차 -->
+        <tr>
+          <td rowspan="5" style="color:var(--blu); font-weight:700; vertical-align:top;">10주차<br><span style="font-size:10px; color:var(--tx3);">Claude Agent</span></td>
+          <td rowspan="5" style="color:var(--tx3); font-size:11px; vertical-align:top;">2026-06-23</td>
+          <td>Prisma 스키마: Claude 판정 필드 4종 추가 + migration</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>schema.prisma + add_claude_fields</code></td>
+        </tr>
+        <tr>
+          <td>@anthropic-ai/sdk 패키지 설치</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>package.json</code></td>
+        </tr>
+        <tr>
+          <td>Claude Reviewer Agent 모듈 신규 생성 (Boundaries+Context 패러다임)</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>src/lib/ai/claudeReviewerAgent.ts</code></td>
+        </tr>
+        <tr>
+          <td>Resend 이메일 헬퍼 래퍼 생성</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>src/lib/resendHelper.ts</code></td>
+        </tr>
+        <tr>
+          <td>.env.local에 CLAUDE_API_KEY 등 환경변수 추가</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>.env.local</code></td>
+        </tr>
+
+        <!-- 11주차 -->
+        <tr>
+          <td style="color:var(--pur); font-weight:700;">11주차</td>
+          <td style="color:var(--tx3); font-size:11px;">2026-06-23</td>
+          <td>MVP 비즈니스 파이프라인 API 라우터 생성 + next build 성공 ✅</td>
+          <td><span class="status pass">✅ 완료</span></td>
+          <td><code>src/app/api/verify-mvp/route.ts</code></td>
+        </tr>
+
+        <!-- 미완 -->
+        <tr>
+          <td style="color:var(--tx3);">Day 53</td>
+          <td style="color:var(--tx3); font-size:11px;">예정</td>
+          <td>GA4 이벤트 스키마 + 코호트 분석 설계</td>
+          <td><span class="status info">📋 예정</span></td>
+          <td><code>Day53_GA4_Cohort_Basics.md</code></td>
+        </tr>
+        <tr>
+          <td style="color:var(--tx3);">Day 54</td>
+          <td style="color:var(--tx3); font-size:11px;">예정</td>
+          <td>종합 제품 검증 계획서 작성</td>
+          <td><span class="status info">📋 예정</span></td>
+          <td><code>Day54_Verification_Plan.md</code></td>
+        </tr>
+        <tr>
+          <td style="color:var(--tx3);">Day 55</td>
+          <td style="color:var(--tx3); font-size:11px;">예정</td>
+          <td>Next.js 14 App Router 기반 GA4 이벤트 트래킹 코드 구현</td>
+          <td><span class="status info">📋 예정</span></td>
+          <td><code>Day55_GA4_Event_Implementation.md</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Day 51 섹션 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="session-divider">
+    <div class="line"></div>
+    <div class="label">DAY 51 · 2026-06-20 <span class="tag tag-done">✅ 완료</span></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- ARRR 퍼널 -->
+  <div class="section">
+    <h2>📈 ARRR 퍼널 매핑 (HR BooleanAI)</h2>
+    <p style="margin-bottom:20px; font-size:13px; color:var(--tx1);">B2B SaaS 기반 HR 서류 진위확인 솔루션의 사용자 여정을 5단계로 정의하고 각 단계에 실제 Pain 지표, 기준선, KPI를 연결합니다.</p>
+    <div class="funnel">
+      <div class="funnel-step f1">
+        <div class="step-num">A</div>
+        <div class="step-body">
+          <div class="step-title">Acquisition (획득)</div>
+          <div class="step-desc">인사담당자 로그인 · KPI: WAU, 가입 전환율 · 채널: PoC 파트너 3곳 → 공공기관 931곳 확장</div>
+        </div>
+      </div>
+      <div class="funnel-step f2">
+        <div class="step-num">A</div>
+        <div class="step-body">
+          <div class="step-title">Activation (활성화) ⭐ 핵심 전환</div>
+          <div class="step-desc">첫 배치 등록 + 첫 1건 검증 성공 · KPI: 배치 등록 성공률 ≥ 95%, 첫 검증 시간 ≤ 10분</div>
+        </div>
+      </div>
+      <div class="funnel-step f3">
+        <div class="step-num">R</div>
+        <div class="step-body">
+          <div class="step-title">Retention (리텐션)</div>
+          <div class="step-desc">공채 회차별 반복 배치 사용 · KPI: 4주 리텐션 60% · 드라이버: 민원 전화 90% 감소 경험</div>
+        </div>
+      </div>
+      <div class="funnel-step f4">
+        <div class="step-num">R</div>
+        <div class="step-body">
+          <div class="step-title">Referral (추천)</div>
+          <div class="step-desc">감사 PDF + 결과 엑셀 유통 · KPI: 리포트 다운로드 수, ATS API 연동사 수</div>
+        </div>
+      </div>
+      <div class="funnel-step f5">
+        <div class="step-num">R</div>
+        <div class="step-body">
+          <div class="step-title">Revenue (매출)</div>
+          <div class="step-desc">건당 과금 또는 연간 구독 · KPI: LTV/CAC ≥ 3:1 · 기준선: 수기 비용 2,500원 → 목표 ≤ 1,250원</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 핵심 가설 -->
+  <div class="section">
+    <h2>💡 핵심 비즈니스 가설 3종</h2>
+
+    <div class="hypo">
+      <div class="hypo-title">가설 1 — AI 판독 추천 UI를 통한 의사결정 시간 단축</div>
+      <div class="hypo-body">AI Reviewer Agent가 원본 서류 + RPA 캡처본을 3중 교차 검증(Triple Check Loop)하여 APPROVE/REJECT/ESCALATE 권고 + 한국어 근거 요약을 제공하면, 담당자 판정 시간이 <strong>12분 → 30초 이하 (96% 단축)</strong>될 것이다.</div>
+      <div class="metric">⏱ 기준선: 건당 12분 → 목표: p95 ≤ 30초</div>
+      <div class="metric" style="margin-left:8px;">🤖 AI Override Rate ≤ 5%</div>
+    </div>
+
+    <div class="hypo h2">
+      <div class="hypo-title">가설 2 — Self-Service 소명/재제출 루프를 통한 민원 차단</div>
+      <div class="hypo-body">REJECT 판정 시, 불일치 사유 + 72시간 유효 재제출 링크를 Resend API로 자동 발송하면, <strong>담당자 수동 개입이 90% 이상 감소</strong>할 것이다.</div>
+      <div class="metric">📧 기준선: 민원 전화가 업무의 70~90% 차지 → Self-Service 처리율 ≥ 90%</div>
+      <div class="metric" style="margin-left:8px;">🔗 재제출 완료율 ≥ 85% (72시간 이내)</div>
+    </div>
+
+    <div class="hypo h3">
+      <div class="hypo-title">가설 3 — 비개발자 PM의 기관 설정 hot-load 완결성</div>
+      <div class="hypo-body">config/agency_config.json hot-load 엔진 + AI 기반 CSS 셀렉터 자동 추천 기능으로 비개발자 PM이 <strong>3분 이내 신규 사이트 설정~RPA 테스트 성공</strong>할 수 있을 것이다.</div>
+      <div class="metric">⚙️ 기준선: 개발자 의뢰 1~3일 → 목표: PM 직접 ≤ 3분</div>
+      <div class="metric" style="margin-left:8px;">🤖 AI CSS 셀렉터 추천 성공률 ≥ 70%</div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 10주차 섹션 (NEW) -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="session-divider">
+    <div class="line"></div>
+    <div class="label">10주차 · 2026-06-23 · Claude Agentic Paradigm <span class="tag tag-new">🆕 신규</span></div>
+    <div class="line"></div>
+  </div>
+
+  <!-- 메모 코드 교정 사항 -->
+  <div class="section">
+    <h2>⚠️ 수업 메모 코드 오류 교정 내역</h2>
+    <p style="font-size:13px; color:var(--tx1); margin-bottom:16px;">수업 메모에 제공된 참고 코드에는 실제 Anthropic SDK와 호환되지 않는 파라미터들이 포함되어 있었습니다. 아래와 같이 교정하여 실제 동작하는 코드로 구현했습니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>메모 코드 (작동 안 함)</th>
+          <th>실제 구현 (교정 완료)</th>
+          <th>사유</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--red);">모델명</td>
+          <td><code style="color:var(--red);">claude-fable-5</code></td>
+          <td><code style="color:var(--acc);">claude-opus-4-5</code></td>
+          <td>존재하지 않는 미래/가상 모델명 → 실제 최신 Opus 모델 사용</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);">Thinking 파라미터</td>
+          <td><code style="color:var(--red);">thinking: { type: 'adaptive' }</code></td>
+          <td><code style="color:var(--acc);">thinking: { type: 'enabled', budget_tokens: 10000 }</code></td>
+          <td>'adaptive' 타입은 SDK에 없음. 실제 Extended Thinking API 사용</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);">비존재 파라미터</td>
+          <td><code style="color:var(--red);">effort: 'max'</code></td>
+          <td>제거</td>
+          <td>OpenAI Responses API 파라미터. Anthropic SDK에 없음</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);">비존재 파라미터</td>
+          <td><code style="color:var(--red);">display: 'omitted'</code></td>
+          <td>제거</td>
+          <td>Anthropic SDK에 없는 파라미터</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);">응답 파싱</td>
+          <td><code style="color:var(--red);">agentResult.choices?.[0]?.message?.content</code></td>
+          <td><code style="color:var(--acc);">response.content 배열 순회 (text/thinking 블록)</code></td>
+          <td>OpenAI 형식. Anthropic SDK 실제 응답 형식은 content[] 배열</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red);">Prisma 필드</td>
+          <td><code style="color:var(--red);">verificationStatus, reviewedAt, errorMessage</code></td>
+          <td><code style="color:var(--acc);">status, rejectReason (실제 스키마 필드)</code></td>
+          <td>실제 schema.prisma에 없는 필드명 → 실제 필드로 교정</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Claude 에이전트 상세 -->
+  <div class="section">
+    <h2>🤖 10주차 구현: Claude Reviewer Agent</h2>
+    <p style="font-size:13px; color:var(--tx1); margin-bottom:16px;"><strong>파일:</strong> <code>src/lib/ai/claudeReviewerAgent.ts</code></p>
+
+    <h3>10주차 핵심 패러다임: Boundaries + Context 프롬프팅</h3>
+    <p style="font-size:13px; color:var(--tx1); margin-bottom:12px;">마이크로 매니지먼트(단계별 지시) 대신 <strong>왜 필요한지 배경(Context)</strong>과 <strong>절대 넘으면 안 되는 경계(Boundaries)</strong>만 명시하고 에이전트의 자율성에 맡기는 방식입니다.</p>
+
+    <div class="code-block"><span class="comment">// 10주차 핵심: Boundaries + Context 프롬프트 구조</span>
+<span class="keyword">const</span> systemPrompt = <span class="string">`
+[CONTEXT]
+당신은 채용 증빙 서류의 진위 여부를 최종 판정하는 'HR 자율형 리뷰어 워커'입니다.
+
+[BOUNDARIES - 제약 조건]
+1. 최종 판정은 반드시 'APPROVE', 'REJECT', 'ESCALATE' 중 하나로만 도출
+2. Jaro-Winkler 유사도 0.85 미만 → REJECT
+   2001년 이전 구버전 자격증 → 반드시 ESCALATE
+3. 임의 데이터 생성 및 미지정 API 호출 금지
+4. 내부 추론 과정 텍스트 노출 금지 — JSON 결과 포맷만 반환
+
+[OUTPUT FORMAT]
+{ "verdict": "APPROVE|REJECT|ESCALATE", "score": 0.0~1.0, "reason": "...", "discrepancies": [] }
+`</span>;</div>
+
+    <h3>실제 SDK 파라미터 (교정 완료)</h3>
+    <div class="code-block"><span class="keyword">const</span> response = <span class="keyword">await</span> client.messages.create({
+  model: <span class="string">'claude-opus-4-5'</span>,       <span class="comment">// ✅ 실제 존재하는 모델</span>
+  max_tokens: <span class="correct">16000</span>,               <span class="comment">// ✅ thinking 사용 시 충분히 크게</span>
+  temperature: <span class="correct">1</span>,                  <span class="comment">// ✅ thinking 활성화 시 temperature=1 필수</span>
+  thinking: {
+    type: <span class="correct">'enabled'</span>,              <span class="comment">// ✅ 실제 Extended Thinking API</span>
+    budget_tokens: <span class="correct">10000</span>,          <span class="comment">// ✅ 사고 예산 (토큰)</span>
+  },
+  <span class="comment">// ❌ effort: 'max' → 제거 (OpenAI 파라미터)</span>
+  <span class="comment">// ❌ display: 'omitted' → 제거 (존재하지 않음)</span>
+  tools: [{ name: <span class="string">'send_to_user_escalation'</span>, ... }],
+  messages: [{ role: <span class="string">'user'</span>, content: [이미지, 텍스트] }],
+});</div>
+
+    <h3>ESCALATE 전용 도구 (Tool Use)</h3>
+    <p style="font-size:13px; color:var(--tx1); margin-bottom:8px;">판정이 모호한 경우(특히 2001년 이전 구버전 자격증) Claude가 자율적으로 도구를 호출하여 담당자에게 수동 검토를 실시간 요청합니다.</p>
+
+    <table>
+      <thead>
+        <tr><th>도구명</th><th>호출 시점</th><th>전달 파라미터</th><th>결과</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>send_to_user_escalation</code></td>
+          <td>ESCALATE 판정 또는 판단 모호 시</td>
+          <td>reason (사유), excelExportRequired (엑셀 포함 여부)</td>
+          <td>대시보드 ESCALATE 배너 + 관리자 이메일 알림</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Gemini 폴백 체계</h3>
+    <p style="font-size:13px; color:var(--tx1);">Claude API Key 미설정, Refusal(거부) 발생, 또는 API 오류 시 기존 <code>src/lib/ai/reviewer-agent.ts</code>의 Gemini 시스템으로 자동 전환됩니다. 무중단 운영이 보장됩니다.</p>
+  </div>
+
+  <!-- Prisma 스키마 변경 -->
+  <div class="section">
+    <h2>🗄️ DB 스키마 변경 (마이그레이션 완료)</h2>
+    <p style="font-size:13px; color:var(--tx1); margin-bottom:16px;">마이그레이션 이름: <code>20260623113900_add_claude_fields</code> · 상태: <span class="status pass">✅ 적용 완료</span></p>
+
+    <table>
+      <thead>
+        <tr><th>모델</th><th>신규 필드</th><th>타입</th><th>설명</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="4" style="color:var(--blu); font-weight:700; vertical-align:top;">VerificationJob</td>
+          <td><code>claudeVerdict</code></td>
+          <td>String?</td>
+          <td>Claude 판정 결과 (APPROVE / REJECT / ESCALATE)</td>
+        </tr>
+        <tr>
+          <td><code>claudeScore</code></td>
+          <td>Float?</td>
+          <td>Claude 신뢰도 점수 (0.0~1.0)</td>
+        </tr>
+        <tr>
+          <td><code>claudeReason</code></td>
+          <td>String?</td>
+          <td>Claude 판정 근거 (한국어)</td>
+        </tr>
+        <tr>
+          <td><code>finalVerdict</code></td>
+          <td>String?</td>
+          <td>최종 판정 (Claude 우선, 없으면 Gemini)</td>
+        </tr>
+        <tr>
+          <td style="color:var(--acc); font-weight:700;">Applicant</td>
+          <td><code>rejectReason</code></td>
+          <td>String?</td>
+          <td>REJECT 판정 시 사유 (Resend 이메일 발송용)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- 11주차 섹션 (NEW) -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="session-divider">
+    <div class="line"></div>
+    <div class="label">11주차 · 2026-06-23 · MVP Business Pipeline <span class="tag tag-new">🆕 신규</span></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="section">
+    <h2>🚀 11주차 구현: MVP 비즈니스 파이프라인 API</h2>
+    <p style="font-size:13px; color:var(--tx1); margin-bottom:20px;"><strong>파일:</strong> <code>src/app/api/verify-mvp/route.ts</code> · <strong>엔드포인트:</strong> <code>POST /api/verify-mvp</code></p>
+
+    <h3>전체 파이프라인 흐름</h3>
+    <div class="pipeline">
+      <div class="pipe-step claude">
+        <div class="pipe-icon">🤖</div>
+        <div class="pipe-label">Claude Agent</div>
+        <div class="pipe-sub">멀티모달 진위확인</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step db">
+        <div class="pipe-icon">🗄️</div>
+        <div class="pipe-label">Prisma DB 동기화</div>
+        <div class="pipe-sub">VerificationJob + Applicant + Batch</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step email">
+        <div class="pipe-icon">📧</div>
+        <div class="pipe-label">Resend 이메일</div>
+        <div class="pipe-sub">REJECT→지원자 / ESCALATE→관리자</div>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-icon">📊</div>
+        <div class="pipe-label">JSON 응답</div>
+        <div class="pipe-sub">verdict + score + reason</div>
+      </div>
+    </div>
+
+    <h3>파이프라인 단계별 상세</h3>
+    <table>
+      <thead>
+        <tr><th>단계</th><th>처리 내용</th><th>조건</th><th>결과</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--pur); font-weight:700;">① Claude 검증</td>
+          <td>멀티모달(서류 이미지 + RPA 캡처본) 진위확인 실행</td>
+          <td>CLAUDE_API_KEY 미설정 시 Mock 모드 자동 전환</td>
+          <td>verdict / score / reason / discrepancies</td>
+        </tr>
+        <tr>
+          <td style="color:var(--blu); font-weight:700;">② DB 동기화</td>
+          <td>VerificationJob (Claude 판정) + Applicant (status, rejectReason) + Batch (통계 카운터)</td>
+          <td>기존 verificationJobId 있으면 update, 없으면 create</td>
+          <td>3개 테이블 원자적 업데이트</td>
+        </tr>
+        <tr>
+          <td style="color:var(--yel); font-weight:700;">③ REJECT 이메일</td>
+          <td>Resend API로 지원자에게 보완 서류 재제출 링크 자동 발송</td>
+          <td>verdict === 'REJECT' AND 지원자 email 존재</td>
+          <td>72시간 유효 고유 토큰 링크 포함 이메일</td>
+        </tr>
+        <tr>
+          <td style="color:var(--red); font-weight:700;">④ ESCALATE 알림</td>
+          <td>관리자(NOTIFICATION_EMAIL)에게 수동 검토 요청 이메일 발송</td>
+          <td>verdict === 'ESCALATE' 또는 toolCallTriggered</td>
+          <td>대시보드 링크 포함 관리자 알림</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Mock 모드 (API Key 없이 즉시 테스트 가능)</h3>
+    <div class="fix-box">
+      <div class="title">✅ CLAUDE_API_KEY 미설정 시 Mock 모드 자동 전환</div>
+      <code>.env.local</code>의 <code>CLAUDE_API_KEY</code>가 <code>your-claude-api-key-here</code>로 남아있으면 자동으로 Mock 결과를 반환합니다. 실제 키 없이도 전체 파이프라인 테스트가 가능합니다.
+    </div>
+
+    <h3>빌드 검증 결과</h3>
+    <div class="code-block"><span class="comment">$ npx next build</span>
+
+Route (app)                              Size     First Load JS
+<span class="correct">✓ /api/verify-mvp                      0 B                0 B</span>
+✓ /dashboard                           4.28 kB        91.6 kB
+✓ /login                               1.29 kB        88.6 kB
+✓ /settings/agencies                   4.93 kB        92.2 kB
+
+<span class="string">✔ Compiled successfully</span>
+<span class="string">✔ Linting and checking validity of types</span></div>
+  </div>
+
+  <!-- 산출물 카드 그리드 -->
+  <div class="section">
+    <h2>📂 10주차·11주차 신규 산출물</h2>
+    <div class="card-grid">
+      <div class="card new-card">
+        <div class="new-tag">10주차 · 신규</div>
+        <div class="icon">🤖</div>
+        <div class="title">claudeReviewerAgent.ts</div>
+        <div class="desc">Claude 에이전트 핵심 모듈. Boundaries+Context 프롬프팅, Extended Thinking, Tool Use, Gemini 폴백 포함.</div>
+      </div>
+      <div class="card new-card">
+        <div class="new-tag">11주차 · 신규</div>
+        <div class="icon">🚀</div>
+        <div class="title">api/verify-mvp/route.ts</div>
+        <div class="desc">MVP 비즈니스 파이프라인 완성. Claude→DB→Resend 3단계 자동화 API. next build 성공 확인.</div>
+      </div>
+      <div class="card new-card">
+        <div class="new-tag">10주차 · 신규</div>
+        <div class="icon">📧</div>
+        <div class="title">resendHelper.ts</div>
+        <div class="desc">Resend 이메일 헬퍼 래퍼. REJECT 지원자 알림 + ESCALATE 관리자 알림 2종 지원.</div>
+      </div>
+      <div class="card new-card">
+        <div class="new-tag">10주차 · 신규</div>
+        <div class="icon">🗄️</div>
+        <div class="title">add_claude_fields 마이그레이션</div>
+        <div class="desc">VerificationJob에 Claude 판정 4개 필드 + Applicant에 rejectReason 추가. SQLite 마이그레이션 적용 완료.</div>
+      </div>
+      <div class="card new-card">
+        <div class="new-tag">Day 52 · 신규</div>
+        <div class="icon">📊</div>
+        <div class="title">Day52_NSM_and_Experiment_Design.md</div>
+        <div class="desc">북극성 지표(NSM) 정의 + A/B 테스트 실험 2종 설계 (AI UI 최적화 + Self-Service 루프).</div>
+      </div>
+      <div class="card">
+        <div class="icon">📁</div>
+        <div class="title">growth_verification/</div>
+        <div class="desc">성장 및 검증 전용 폴더. Day 51~55 기획 분석서 및 구현 문서 허브.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 다음 단계 ── -->
+  <div class="section">
+    <h2>🚀 남은 작업 (Next Steps)</h2>
+
+    <table>
+      <thead>
+        <tr><th>단계</th><th>주제</th><th>핵심 산출물</th><th>상태</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:var(--acc); font-weight:700;">즉시 가능</td>
+          <td>Claude API Key 입력 후 실제 테스트</td>
+          <td>.env.local의 CLAUDE_API_KEY 실제 키로 교체 → POST /api/verify-mvp 호출</td>
+          <td><span class="status warn">⏳ API Key 필요</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--tx2);">Day 53</td>
+          <td>GA4 & 코호트 분석 기초</td>
+          <td>GA4 이벤트 스키마 + 코호트 분석 설계 문서</td>
+          <td><span class="status info">📋 예정</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--tx2);">Day 54</td>
+          <td>종합 검증 계획서 작성</td>
+          <td>Verification Plan 문서 (가설 1~3 검증 로드맵)</td>
+          <td><span class="status info">📋 예정</span></td>
+        </tr>
+        <tr>
+          <td style="color:var(--tx2);">Day 55</td>
+          <td>GA4 이벤트 구현</td>
+          <td>Next.js 14 App Router 기반 GA4 batch_create / decision_confirm 이벤트 트래킹</td>
+          <td><span class="status info">📋 예정</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 푸터 -->
+  <div class="footer">
+    HR BooleanAI Project · 누적 작업 보고서 (Day 51 ~ 11주차) · 최종 업데이트 2026-06-23
+  </div>
+
+</div>
+
+</body>
+</html>
